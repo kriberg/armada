@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="armadaApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Armada</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="js/bower_components/patternfly/dist/css/patternfly.min.css">
+    <link rel="stylesheet" href="css/armada.css">
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-pf" role="navigation" ng-controller="NavbarController">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Aramada placeholder</a>
+        </div>
+        <div class="collapse navbar-collapse navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-utility">
+                <li>
+                    <a href>
+                        <eve-status ng-controller="EveStatusController"></eve-status>
+                    </a>
+                </li>
+                <li ng-hide="capsuler"><a ng-href="#/login">Log in</a></li>
+                <li ng-show="capsuler" class="dropdown" dropdown>
+                    <a href="" class="dropdown-toggle" dropdown-toggle>
+                        <span class="pficon pficon-user"></span>
+                        {{capsuler.username}}<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#/">Settings</a>
+                        </li>
+                        <li>
+                            <a href="#/">API Keys</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href ng-click="logout()">Log out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-primary" ng-show="capsuler">
+                <li class="active">
+                    <a href="#/">Dashboard</a>
+                </li>
+                <li>
+                    <a href="#/">Characters</a>
+                </li>
+                <li>
+                    <a href="#/">EVE Mail</a>
+                </li>
+                <li ng-repeat="corporation in corporations">
+                    <a href="#/">{{corporation.corporationName}}</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div ng-view class="container-fluid"></div>
+
+    <!-- In production use:
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+    -->
+    <script src="js/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="js/bower_components/jquery-number/jquery.number.min.js"></script>
+    <script src="js/bower_components/angular/angular.js"></script>
+    <script src="js/bower_components/angular-route/angular-route.js"></script>
+    <script src="js/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="js/bower_components/angular-django-rest-resource/angular-django-rest-resource.js"></script>
+    <script src="js/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="js/bower_components/patternfly/dist/js/patternfly.min.js"></script>
+    <script src="js/http-auth-interceptor.js"></script>
+    <script src="js/filters/numbers.js"></script>
+    <script src="js/armada.js"></script>
+    <script src="js/directives/login.js"></script>
+    <script src="js/controllers/navbar.js"></script>
+    <script src="js/controllers/dashboard.js"></script>
+    <script src="js/controllers/tour.js"></script>
+    <script src="js/services/stationspinner.js"></script>
+    <script src="js/directives/character-box.js"></script>
+    <script src="js/directives/character-box-extended.js"></script>
+    <script src="js/directives/eve-status.js"></script>
+</body>
+</html>

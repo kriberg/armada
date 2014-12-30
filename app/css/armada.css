@@ -1,0 +1,41 @@
+.login-pf div.container-fluid {
+  bottom: 13%;
+  padding-left: 80px;
+  position: absolute;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.login-pf div.details {
+  border-left: 2px solid #474747;
+}
+
+.login-pf div.details a {
+  margin-right: 15px;
+}
+
+.login-pf body {
+  background-size: 100% auto;
+  background: url("http://web.ccpgamescdn.com/newssystem/media/2979/3245/12.jpg") repeat-x scroll 50% 0px #080808;
+}
+
+character-box {
+  line-height: 21px;
+  padding: 5px 5px;
+}
+
+character-box div.row {
+  margin: 0px;
+}
+
+character-box-extended {
+  line-height: 16px;
+  font-size: 12px;
+  padding: 5px 5px;
+}
+
+character-box-extended div.row {
+  margin: 0px;
+}
+
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
