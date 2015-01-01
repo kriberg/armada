@@ -5,7 +5,8 @@
         return {
             restrict: 'EA',
             scope: {
-                character: '=character'
+                character: '=character',
+                skill: '=skill'
             },
             templateUrl: 'js/directives/character-box-extended.html'
         };

@@ -41,9 +41,9 @@
             'ui.bootstrap'
         ])
         .config(['$routeProvider', '$httpProvider', Configuration])
-        .filter('ISK', [ISK])
-        .filter('humanifyISK', [HumanifyISK])
+        .filter('shortify', [Shortify])
         .filter('humanify', [Humanify])
+        .filter('romanify', [Romanify])
         .run(function($cookieStore, $rootScope, $http, $location) {
             $rootScope.$on('$routeChangeStart', function(event, next, current) {
                 if ($rootScope.loggedInUser == null) {
@@ -53,6 +53,9 @@
                     } else {
                         $rootScope.destination = next;
                     }
+                }
+                if(!next.templateUrl === "partials/login.html") {
+                    angular.element("html").removeClass("login-pf")
                 }
             });
             if($cookieStore.get('djangotoken')) {

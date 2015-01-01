@@ -5,11 +5,28 @@
     </div>
     <div class="col-md-9">
         <ul class="list list-unstyled">
-            <li>{{character.name}}</li>
-            <li>{{character.corporationName}}</li>
-            <li ng-if="character.allianceName">{{character.allianceName}}</li>
-            <li>{{character.balance|humanifyISK}} isk</li>
-            <li>{{character.skillInTraining.trainingTypeID}}</li>
+            <li><a ng-href=""><strong>{{character.name}}</strong></a></li>
+            <li><a ng-href="">{{character.corporationName}}</a></li>
+            <li><a ng-href="">{{character.allianceName}}</a>&nbsp;</li>
+            <li>{{character.skillPoints|shortify}} sp, {{character.balance|shortify}} isk</li>
+        </ul>
+    </div>
+    <div class="col-md-12 skill-training">
+        <ul class="list list-inline">
+            <li class="pull-left">
+                <ul class="list list-unstyled">
+                    <li ng-show="skill.skillInTraining"><strong>{{skill.typeName}}</strong></li>
+                    <li ng-hide="skill.skillInTraining" style="color: #D2413A">- No skill in training -</li>
+                    <li ng-show="skill.skillInTraining">Skill Points: {{skill.trainingStartSP|humanify}} / {{skill.trainingDestinationSP|humanify}}</li>
+                    <li ng-hide="skill.skillInTraining">&nbsp;</li>
+                </ul>
+            </li>
+            <li class="pull-right">
+                <ul class="list list-unstyled text-right" ng-show="skill.skillInTraining">
+                    <li><strong>Level {{skill.trainingToLevel}}</strong></li>
+                    <li>Finishes {{skill.trainingEndTime|date:'MMM d, HH:mm'}}</li>
+                </ul>
+            </li>
         </ul>
     </div>
 </div>

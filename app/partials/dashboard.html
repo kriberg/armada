@@ -4,10 +4,13 @@
             <h1 ng-show="capsuler.username">{{capsuler.username}} dashboard</h1>
         </div>
         <div>
+
+        </div>
+        <div>
             <h2>Characters</h2>
             <ul class="list-inline">
-                <li ng-repeat="character in characters | orderBy: 'skillPoints':true" class="col-md-3">
-                    <character-box-extended character="character"></character-box-extended>
+                <li ng-repeat="character in characters | orderBy: 'skillPoints':true" class="col-md-4 col-sm-12">
+                    <character-box-extended character="character" skill="character.skillInTraining[0]"></character-box-extended>
                 </li>
             </ul>
         </div>
@@ -21,7 +24,7 @@
                 <span class="badge">{{note.sentDate|date:'HH:mm MMM d'}}</span>
                 <h4 class="list-group-item-heading">{{note.senderName}} <i class="fa fa-angle-double-right"></i> {{note.owner.name}}</h4>
                 <p class="list-group-item-text">
-                    {{note.raw_message}}
+                    {{note.parsed_message}}
                 </p>
             </li>
         </ul>

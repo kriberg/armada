@@ -1,12 +1,6 @@
-function ISK() {
+function Shortify() {
     return function (value) {
-        return $.number(parseFloat(value), 2, '.', ',');
-    }
-}
-
-function HumanifyISK() {
-    return function (value) {
-        var digits = value.split('.')[0];
+        var digits = String(value).split('.')[0];
 
 
         if(digits.length > 6 && digits.length < 10) {
@@ -24,5 +18,24 @@ function Humanify() {
     return function (value) {
         return $.number(parseFloat(value), 0, '.', ',');
     }
+}
 
+function Romanify() {
+    "use strict";
+    return function (value) {
+        if(value <= 5 && value > 0) {
+            switch(value) {
+                case 1:
+                    return 'I';
+                case 2:
+                    return 'II';
+                case 3:
+                    return 'III';
+                case 4:
+                    return 'IV';
+                case 5:
+                    return 'V';
+            }
+        }
+    }
 }

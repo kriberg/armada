@@ -15,6 +15,7 @@
 
         service.CharacterSheet = djResource('/char/CharacterSheet/:characterID/', {characterID: '@characterID'});
         service.Notifications = djResource('/char/Notifications/');
+        service.SkillInTraining = djResource('/char/SkillInTraining/:characterID/', {characterID: '@characterID'});
 
         /* corp services */
 

@@ -31,11 +31,20 @@ character-box div.row {
 character-box-extended {
   line-height: 16px;
   font-size: 12px;
-  padding: 5px 5px;
+  padding: 10px 10px;
+}
+
+character-box-extended img {
+  border-radius: 5px;
 }
 
 character-box-extended div.row {
   margin: 0px;
+  padding: 10px 0px;
+}
+
+character-box-extended div.skill-training {
+  margin-top: 10px;
 }
 
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
