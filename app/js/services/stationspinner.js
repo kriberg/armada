@@ -2,14 +2,14 @@
 (function () {
     'use strict';
 
-    function Stationspinner($http, djResource) {
+    function Stationspinner(djResource) {
         var service = {};
 
         /* accounting services */
 
         service.Capsuler = djResource('/accounting/capsuler/');
         service.APIKey = djResource('/accounting/apikey/:id/', {id: '@id'});
-        service.KeyUpdates = djResource('/accounting/key-updates/');
+        service.MissingTraining = djResource('/accounting/missing-training/');
 
         /* char services */
 
@@ -26,5 +26,5 @@
 
     angular.
         module('stationspinnerServices', []).
-        factory('Stationspinner', ['$http', 'djResource', Stationspinner]);
+        factory('Stationspinner', ['djResource', Stationspinner]);
 }());

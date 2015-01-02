@@ -3,8 +3,12 @@
         <div class="page-header page-header-bleed-right">
             <h1 ng-show="capsuler.username">{{capsuler.username}} dashboard</h1>
         </div>
-        <div>
-
+        <div ng-repeat="account in missingTraining" ng-show="missingTraining">
+            <h2 class="text-danger">Account key {{account.keyID}} "{{account.name}}" has no active training.</h2>
+            <ul class="list list-inline">
+                <li>Associated characters:</li>
+                <li ng-repeat="character in account.account_characters">{{character.name}}</li>
+            </ul>
         </div>
         <div>
             <h2>Characters</h2>
@@ -21,7 +25,7 @@
         </div>
         <ul class="list-group">
             <li class="list-group-item" ng-repeat="note in notifications| orderBy: 'sentDate':true |limitTo: 10">
-                <span class="badge">{{note.sentDate|date:'HH:mm MMM d'}}</span>
+                <span class="badge">{{note.sentDate|date:'MMM dd, HH:mm'}}</span>
                 <h4 class="list-group-item-heading">{{note.senderName}} <i class="fa fa-angle-double-right"></i> {{note.owner.name}}</h4>
                 <p class="list-group-item-text">
                     {{note.parsed_message}}
