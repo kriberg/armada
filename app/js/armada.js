@@ -21,6 +21,14 @@
                 templateUrl: 'partials/tour.html',
                 controller: 'TourController'
             }).
+            when('/evemail', {
+                templateUrl: 'partials/evemail.html',
+                controller: 'EVEMailController'
+            }).
+            when('/apikeys', {
+                templateUrl: 'partials/apikeys.html',
+                controller: 'APIKeyController'
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -38,6 +46,8 @@
             'navbarControllers',
             'evestatusControllers',
             'tourControllers',
+            'evemailControllers',
+            'apikeyControllers',
             'ui.bootstrap'
         ])
         .config(['$routeProvider', '$httpProvider', Configuration])

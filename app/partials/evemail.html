@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-sm-9 col-md-10 col-sm-push-3 col-md-push-2" style="min-height: 779px;">
+        <ul class="list">
+            <li ng-repeat="mail in mails">{{mail.title}}</li>
+        </ul>
+    </div>
+
+    <div class="col-sm-3 col-md-2 col-sm-pull-9 col-md-pull-10 sidebar-pf sidebar-pf-left">
+        <div class="panel-group">
+            <div class="panel panel-default" ng-repeat="character in characters|orderBy: 'skillPoints':true">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href ng-click="collapse(character.name)">
+                            {{character.name}}
+                        </a>
+                    </h4>
+                </div>
+                <div collapse="collapse[character.name]" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a ng-href="#">Inbox</a></li>
+                            <li><a href="#">Corporation</a></li>
+                            <li><a href="#">Alliance</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -34,8 +34,12 @@ character-box-extended {
   padding: 10px 10px;
 }
 
-character-box-extended img {
+img.portrait {
   border-radius: 5px;
+}
+
+.apikey {
+  margin-bottom: 100px;
 }
 
 character-box-extended div.row {

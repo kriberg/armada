@@ -7,7 +7,7 @@
             <h2 class="text-danger">Account key {{account.keyID}} "{{account.name}}" has no active training.</h2>
             <ul class="list list-inline">
                 <li>Associated characters:</li>
-                <li ng-repeat="character in account.account_characters">{{character.name}}</li>
+                <li ng-repeat="character in account.associated_characters">{{character.name}}</li>
             </ul>
         </div>
         <div>

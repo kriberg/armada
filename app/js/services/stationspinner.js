@@ -8,7 +8,7 @@
         /* accounting services */
 
         service.Capsuler = djResource('/accounting/capsuler/');
-        service.APIKey = djResource('/accounting/apikey/:id/', {id: '@id'});
+        service.APIKey = djResource('/accounting/apikeys/:id/', {id: '@id'});
         service.MissingTraining = djResource('/accounting/missing-training/');
 
         /* char services */
@@ -16,6 +16,7 @@
         service.CharacterSheet = djResource('/char/CharacterSheet/:characterID/', {characterID: '@characterID'});
         service.Notifications = djResource('/char/Notifications/');
         service.SkillInTraining = djResource('/char/SkillInTraining/:characterID/', {characterID: '@characterID'});
+        service.MailMessage = djResource('/char/MailMessage/:messageID/', {messageID: '@messageID'});
 
         /* corp services */
 

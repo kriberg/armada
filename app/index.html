@@ -38,7 +38,7 @@
                             <a href="#/">Settings</a>
                         </li>
                         <li>
-                            <a href="#/">API Keys</a>
+                            <a href="#/apikeys">API Keys</a>
                         </li>
                         <li class="divider"></li>
                         <li>
@@ -48,17 +48,19 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-primary" ng-show="capsuler">
-                <li class="active">
-                    <a href="#/">Dashboard</a>
+                <li>
+                    <a href="#/" active-link>Dashboard</a>
                 </li>
                 <li>
-                    <a href="#/">Characters</a>
+                    <a href="#/characters" active-link>Characters</a>
                 </li>
                 <li>
-                    <a href="#/">EVE Mail</a>
+                    <a href="#/evemail"  active-link>EVE Mail</a>
                 </li>
                 <li ng-repeat="corporation in corporations">
-                    <a href="#/">{{corporation.corporationName}}</a>
+                    <a ng-href="#/corporation/:corporationName" active-link>
+                        {{corporation.corporationName}}
+                    </a>
                 </li>
             </ul>
         </div>
@@ -83,9 +85,13 @@
     <script src="js/controllers/navbar.js"></script>
     <script src="js/controllers/dashboard.js"></script>
     <script src="js/controllers/tour.js"></script>
+    <script src="js/controllers/evemail.js"></script>
+    <script src="js/controllers/apikeys.js"></script>
     <script src="js/services/stationspinner.js"></script>
     <script src="js/directives/character-box.js"></script>
     <script src="js/directives/character-box-extended.js"></script>
     <script src="js/directives/eve-status.js"></script>
+    <script src="js/directives/active-link.js"></script>
+    <script src="js/directives/api-key.js"></script>
 </body>
 </html>

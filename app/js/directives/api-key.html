@@ -1,0 +1,79 @@
+<div class="box">
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="{{key.id}}_name">Name</label>
+
+        <div class="col-md-4">
+            <input type="text" name="name" id="{{key.id}}_name" class="form-control" ng-model="key.name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="{{key.id}}_keyID">keyID</label>
+
+        <div class="col-md-4">
+            <input type="text" name="keyID" id="{{key.id}}_keyID" class="form-control" ng-model="key.keyID">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="{{key.id}}_vCode">vCode</label>
+
+        <div class="col-md-8">
+            <input type="text" name="vCode" id="{{key.id}}_vCode" class="form-control" ng-model="key.vCode">
+        </div>
+    </div>
+    <div ng-show="key.id">
+        <div ng-show="key.type">
+        <div class="form-group">
+            <label class="col-md-4 control-label">Expires</label>
+
+            <div class="col-md-4">
+                            <span ng-hide="key.expired">
+                                <span ng-hide="key.expires.indexOf('2033') == 0">{{key.expires|date:'MMM dd yyyy, HH:mm'}}</span>
+                                <span ng-show="key.expires.indexOf('2033') == 0">Never</span>
+                            </span>
+            <span ng-show="key.expired"
+                  class="bg-danger">This key expired {{key.expires|date:'MMM dd yyyy, HH:mm'}}!</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label">Type</label>
+
+            <div class="col-md-4">
+                {{key.type}}
+            </div>
+        </div>
+        <div class="form-group" ng-hide="key.type == 'Corporation'">
+            <label class="col-md-4 control-label">Associated characters</label>
+
+            <div class="col-md-8">
+                <ul class="list list-inline">
+                    <li ng-repeat="character in key.associated_characters">
+                        <img ng-src="http://image.eveonline.com/Character/{{character.characterID}}_32.jpg"
+                             alt="{{character.name}} portrait" class="portrait">
+                        {{character.name}}
+                    </li>
+                    <li ng-hide="key.associated_characters.length">None</li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group" ng-show="key.type == 'Corporation'">
+            <label class="col-md-4 control-label">Associated corporation</label>
+            <div class="col-md-8">
+                <ul class="list list-inline">
+                    <li ng-repeat="corporation in key.associated_corporations">
+                        <img ng-src="http://image.eveonline.com/Corporation/{{corporation.corporationID}}_32.png"
+                             alt="{{corporation.corporationName}} logo" class="portrait">
+                        {{corporation.corporationName}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        </div>
+        <div class="form-group" ng-hide="key.type">
+            <label class="col-md-4 control-label">Status</label>
+            <div class="col-md-8">
+                API Key is still pending validation and indexing.
+            </div>
+        </div>
+
+    </div>
+</div>

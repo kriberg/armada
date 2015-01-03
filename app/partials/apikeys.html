@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+        <h1>Add new API Key</h1>
+        <div class="row">
+            <div class="col-md-6 apikey">
+                <form class="form-horizontal">
+                    <api-key key="newKey"></api-key>
+                </form>
+                <div class="text-right">
+                    <button ng-click="saveKey(newKey)" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <h1>Registered API Keys</h1>
+        <ul class="list list-unstyled">
+            <li ng-repeat="key in apikeys|orderBy: 'name'" class="col-md-6 apikey">
+                <div class="row">
+                    <form class="form-horizontal">
+                        <api-key key="key"></api-key>
+                        <ul class="list list-inline text-right">
+                            <li><button ng-click="deleteKey(key)" class="btn btn-danger">Delete</button></li>
+                            <li><button ng-click="saveKey(key)" class="btn btn-primary">Update</button></li>
+                        </ul>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
