@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="mail-spacer"></div>
+    <div class="col-md-12">
+        <dl class="dl-horizontal">
+            <dt>From</dt>
+            <dd>{{mail.senderName}}</dd>
+            <dt>To</dt>
+            <dd>
+                <span class="mail-label" ng-repeat="receiver in mail.receivers |limitTo:5" ng-style="colorize(receiver.type)">
+                    {{receiver.name}}
+                </span>
+                <span ng-show="receivers.length > 5">
+                    <span class="text-info">[more]</span>
+                </span>
+            </dd>
+            <dt>Subject</dt>
+            <dd>{{mail.title}}</dd>
+            <dt>Sent</dt>
+            <dd>{{mail.sentDate}}</dd>
+        </dl>
+    </div>
+    <div class="mail-spacer"></div>
+    <div class="col-md-12">
+        <span ng-bind-html="mail.parsed_message"></span>
+    </div>
+</div>

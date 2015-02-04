@@ -1,54 +1,85 @@
 .login-pf div.container-fluid {
-  bottom: 13%;
-  padding-left: 80px;
-  position: absolute;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
+    bottom: 13%;
+    padding-left: 80px;
+    position: absolute;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
 }
 
 .login-pf div.details {
-  border-left: 2px solid #474747;
+    border-left: 2px solid #474747;
 }
 
 .login-pf div.details a {
-  margin-right: 15px;
+    margin-right: 15px;
 }
 
 .login-pf body {
-  background-size: 100% auto;
-  background: url("http://web.ccpgamescdn.com/newssystem/media/2979/3245/12.jpg") repeat-x scroll 50% 0px #080808;
+    background-size: 100% auto;
+    background: url("http://web.ccpgamescdn.com/newssystem/media/2979/3245/12.jpg") repeat-x scroll 50% 0px #080808;
 }
 
 character-box {
-  line-height: 21px;
-  padding: 5px 5px;
+    line-height: 21px;
+    padding: 5px 5px;
 }
 
 character-box div.row {
-  margin: 0px;
+    margin: 0px;
 }
 
 character-box-extended {
-  line-height: 16px;
-  font-size: 12px;
-  padding: 10px 10px;
+    line-height: 16px;
+    font-size: 12px;
+    padding: 10px 10px;
 }
 
 img.portrait {
-  border-radius: 5px;
+    border-radius: 5px;
 }
 
 .apikey {
-  margin-bottom: 100px;
+    margin-bottom: 100px;
 }
 
 character-box-extended div.row {
-  margin: 0px;
-  padding: 10px 0px;
+    margin: 0px;
+    padding: 10px 0px;
 }
 
 character-box-extended div.skill-training {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
-.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+span.mail-label {
+    border-radius: 3px;
+    padding: 0px 5px;
+    color: #fff;
+    margin-right: 5px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+div.mail-spacer {
+    margin: 20px 0px;
+}
+
+table.mail-table tr {
+    margin-bottom: 10px;
+}
+span.mail-title {
+    font-size: 16px;
+}
+
+mail-display dl.dl-horizontal dt {
+    width: 50px;
+}
+mail-display dl.dl-horizontal dd {
+    margin-left: 70px;
+}

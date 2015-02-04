@@ -1,30 +1,121 @@
 <div class="row">
-    <div class="col-sm-9 col-md-10 col-sm-push-3 col-md-push-2" style="min-height: 779px;">
-        <ul class="list">
-            <li ng-repeat="mail in mails">{{mail.title}}</li>
-        </ul>
-    </div>
-
-    <div class="col-sm-3 col-md-2 col-sm-pull-9 col-md-pull-10 sidebar-pf sidebar-pf-left">
+    <div class="col-md-2 sidebar-pf sidebar-pf-left">
         <div class="panel-group">
-            <div class="panel panel-default" ng-repeat="character in characters|orderBy: 'skillPoints':true">
+            <h2>Mail boxes</h2>
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a href ng-click="collapse(character.name)">
-                            {{character.name}}
+                        <a href ng-click="charactersCollapsed = !charactersCollapsed"
+                           ng-class="{collapsed: charactersCollapsed}">
+                            Characters
                         </a>
                     </h4>
                 </div>
-                <div collapse="collapse[character.name]" class="panel-collapse collapse in">
+                <div class="panel-collapse collapse in" collapse="charactersCollapsed"
+                     ng-init="charactersCollapsed = false">
                     <div class="panel-body">
                         <ul class="nav nav-pills nav-stacked">
-                            <li><a ng-href="#">Inbox</a></li>
-                            <li><a href="#">Corporation</a></li>
-                            <li><a href="#">Alliance</a></li>
+                            <li ng-class="isActive(character.name)"
+                                ng-repeat="character in characters|orderBy: 'skillPoints':true">
+                                <a href ng-click="toggleFilter(character.name)">
+                                    {{character.name}}
+                                    <i class="glyphicon glyphicon-ok pull-right"
+                                       ng-show="filters[character.name]"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href ng-click="corporationsCollapsed = !corporationsCollapsed"
+                           ng-class="{collapsed: corporationsCollapsed}">
+                            Corporations
+                        </a>
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse in" collapse="corporationsCollapsed"
+                     ng-init="corporationsCollapsed = false">
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li ng-class="isActive(corporation.corporationName)"
+                                ng-repeat="corporation in corporations|orderBy: 'corporationName':true">
+                                <a href ng-click="toggleFilter(corporation.corporationName)">
+                                    {{corporation.corporationName}}
+                                    <i class="glyphicon glyphicon-ok pull-right"
+                                       ng-show="filters[corporation.corporationName]"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a href ng-click="alliancesCollapsed = !alliancesCollapsed"
+                           ng-class="{collapsed: alliancesCollapsed}">
+                            Alliances
+                        </a>
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse in" collapse="alliancesCollapsed"
+                     ng-init="alliancesCollapsed = false">
+                    <div class="panel-body">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li ng-class="isActive(alliance.allianceName)"
+                                ng-repeat="alliance in alliances|orderBy: 'allianceName':true">
+                                <a href ng-click="toggleFilter(alliance.allianceName)">
+                                    {{alliance.allianceName}}
+                                    <i class="glyphicon glyphicon-ok pull-right"
+                                       ng-show="filters[alliance.allianceName]"></i>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-md-5">
+        <div class="mail-spacer"></div>
+        <form ng-submit="search()" class="seach">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search evemail..." ng-model="searchQuery">
+                <div class="input-group-btn" dropdown>
+                    <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+                        {{searchLanguage}}
+                        <span class="caret"></span>
+                        <span class="sr-only"></span>
+                    </button>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li ng-repeat="lang in searchLanguages.languages">
+                            <a href ng-click="setLanguage(lang)">{{lang}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+        <div class="mail-spacer"></div>
+        <table class="table table-hover mail-table">
+            <tr dir-paginate="mail in mails | orderBy:orderField:true | itemsPerPage: 15" current-page="currentPage" ng-click="showMail(mail)">
+                <td>
+                    <span class="mail-title" ng-class="mail.read ? '': 'text-bold'">{{mail.title}}</span><br>
+                    {{mail.senderName}}
+                </td>
+                <td class="text-right">
+                    {{mail.sentDate|date:'HH:mm MMM, dd yyyy'}}
+                </td>
+            </tr>
+        </table>
+        <div class="text-center">
+            <dir-pagination-controls></dir-pagination-controls>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <mail-display mail="activeMail" ng-show="activeMail" ng-controller="MailDisplayController"></mail-display>
     </div>
 </div>

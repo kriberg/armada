@@ -39,18 +39,24 @@
             'http-auth-interceptor',
             'ngRoute',
             'ngCookies',
-            'djangoRESTResources',
+            'ngSanitize',
+            'ui.bootstrap',
+            'ngResource',
+            'angularUtils.directives.dirPagination',
             'stationspinnerServices',
             'loginControllers',
             'dashboardControllers',
             'navbarControllers',
             'evestatusControllers',
+            'mailDisplayControllers',
             'tourControllers',
             'evemailControllers',
-            'apikeyControllers',
-            'ui.bootstrap'
+            'apikeyControllers'
         ])
         .config(['$routeProvider', '$httpProvider', Configuration])
+        .config(function(paginationTemplateProvider) {
+            paginationTemplateProvider.setPath('js/directives/dirPagination.tpl.html');
+        })
         .filter('shortify', [Shortify])
         .filter('humanify', [Humanify])
         .filter('romanify', [Romanify])
@@ -73,5 +79,6 @@
             } else {
                 $location.path('/login');
             }
+
         });
 })();

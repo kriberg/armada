@@ -6,17 +6,18 @@
   "license": "AGPL3",
   "private": true,
   "dependencies": {
-    "angular": "1.3.x",
+    "angular": "1.3.12",
     "angular-route": "1.3.x",
+    "angular-sanitize": "1.3.x",
     "angular-cookies": "1.3.x",
     "angular-bootstrap": "x",
-    "angular-django-rest-resource": "~1.0.x",
-    "patternfly": "~1.1.2",
+    "angular-resource": "1.3.x",
+    "patternfly": "~1.1.3",
     "jquery-number": "2.x",
-    "jquery": "2.1.x"
+    "jquery": "2.1.x",
+    "angular-utils-pagination": "~0.5.0"
   },
   "resolutions": {
-    "patternfly": "~1.1.2",
-    "angular": "1.3.x"
+    "angular": "1.3.12"
   }
 }
