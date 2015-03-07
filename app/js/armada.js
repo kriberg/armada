@@ -48,12 +48,14 @@
             'dashboardControllers',
             'navbarControllers',
             'evestatusControllers',
-            'mailDisplayControllers',
             'tourControllers',
             'evemailControllers',
             'apikeyControllers'
         ])
         .config(['$routeProvider', '$httpProvider', Configuration])
+        .config(function($resourceProvider) {
+            $resourceProvider.defaults.stripTrailingSlashes = false;
+        })
         .config(function(paginationTemplateProvider) {
             paginationTemplateProvider.setPath('js/directives/dirPagination.tpl.html');
         })

@@ -55,17 +55,12 @@ character-box-extended div.skill-training {
     cursor: pointer;
 }
 
-span.mail-label {
-    border-radius: 3px;
-    padding: 0px 5px;
-    color: #fff;
-    margin-right: 5px;
-}
-
 .text-bold {
     font-weight: bold;
 }
+span.mail-label {
 
+}
 div.mail-spacer {
     margin: 20px 0px;
 }

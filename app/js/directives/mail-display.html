@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-show="mail">
     <div class="mail-spacer"></div>
     <div class="col-md-12">
         <dl class="dl-horizontal">
@@ -6,12 +6,13 @@
             <dd>{{mail.senderName}}</dd>
             <dt>To</dt>
             <dd>
-                <span class="mail-label" ng-repeat="receiver in mail.receivers |limitTo:5" ng-style="colorize(receiver.type)">
+                <span class="mail-label" ng-repeat="receiver in mail.receivers |limitTo:15">
                     {{receiver.name}}
                 </span>
-                <span ng-show="receivers.length > 5">
+                <span ng-show="receivers.length > 15">
                     <span class="text-info">[more]</span>
                 </span>
+                <span ng-hide="receivers.length">&nbsp;</span>
             </dd>
             <dt>Subject</dt>
             <dd>{{mail.title}}</dd>
@@ -20,7 +21,7 @@
         </dl>
     </div>
     <div class="mail-spacer"></div>
-    <div class="col-md-12">
+    <div class="col-md-12 mail-content">
         <span ng-bind-html="mail.parsed_message"></span>
     </div>
 </div>
