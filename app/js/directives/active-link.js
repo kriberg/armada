@@ -5,12 +5,16 @@
         return {
             restrict: 'A',
             link: function (scope, element, attrs, controller) {
-                scope.$on('$locationChangeStart', function () {
-                    if(attrs.href.substring(1) == location.path())
+                var activate = function () {
+                    var section = location.path().split('/')[1];
+                    if(attrs.href.substring(2) == section) {
                         element.parent().addClass('active');
-                    else
+                    } else {
                         element.parent().removeClass('active');
-                });
+                    }
+                };
+                scope.$on('$locationChangeStart', activate);
+                scope.$on('$stateChangeSuccess', activate);
             }
         };
     }
