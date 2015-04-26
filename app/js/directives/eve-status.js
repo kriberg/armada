@@ -20,7 +20,7 @@
         };
 
         $scope.refreshServerStatus = function() {
-            $http.get('/universe/tranquility/')
+            $http.get('/api/universe/tranquility/')
                 .success(function (data) {
                     if(data.serverOpen == 'True')
                         $scope.status.server = 'online';
