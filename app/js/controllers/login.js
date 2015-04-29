@@ -20,7 +20,7 @@
             if($scope.rememberUsername) {
                 $cookieStore.put('username', $scope.username);
             }
-            $http.post("/auth/", user_data)
+            $http.post("/api/auth/", user_data)
                 .success(function (response) {
                     $cookieStore.put('djangotoken', response.token);
                     $http.defaults.headers.common['Authorization'] = 'Token ' + response.token;
@@ -29,6 +29,11 @@
                     authService.loginConfirmed();
                     angular.element("html").removeClass('login-pf');
                     $location.path('/');
+                })
+                .error(function (response) {
+                    if(response.non_field_errors !== undefined) {
+                        $scope.errorMsg = response.non_field_errors.join('<br />');
+                    }
                 });
         };
 

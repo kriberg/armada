@@ -27,8 +27,9 @@
                             <input type="checkbox" tabindex="3" ng-model="rememberUsername"> Remember Username
                         </label>
                     </div>
-                        <span class="help-block"> Forgot <a href="#" tabindex="5">Username</a> or <a href="#"
-                                                                                                     tabindex="6">Password</a>?</span>
+                    <!--span class="help-block"> Forgot <a href="#" tabindex="5">Username</a> or <a href="#"
+                            tabindex="6">Password</a>?</span-->
+                    <div class="text-warning" ng-show="errorMsg">{{ errorMsg }}</div>
                 </div>
                 <div class="col-xs-4 col-sm-4 col-md-4 submit">
                     <button type="submit" class="btn btn-primary btn-lg pull-right" tabindex="4">Log In</button>
@@ -36,15 +37,12 @@
             </div>
         </form>
     </div>
-    <!--/.col-*-->
     <div class="col-sm-5 col-md-6 col-lg-7 details">
         <p>
             <strong>Welcome to Armada!</strong>
 
         </p>
         <a href="#/tour" class="btn btn-success btn-lg">Take the tour</a>
-        <a href="/registration/register/" class="btn btn-success btn-lg">Create an account</a>
+        <a href="/api/registration/register/" class="btn btn-success btn-lg">Create an account</a>
     </div>
-    <!--/.col-*-->
 </div>
-<!--/.row-->
