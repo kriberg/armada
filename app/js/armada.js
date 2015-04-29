@@ -11,10 +11,6 @@
                 templateUrl: 'partials/dashboard.html',
                 controller: 'DashboardController'
             })
-            /*when('/characters', {
-             templateUrl: 'partials/characters.html',
-             controller: 'CharacterList'
-             }).*/
             .state('login', {
                 url: '/login',
                 templateUrl: 'partials/login.html',
@@ -144,7 +140,8 @@
                     }
                 }
                 if(!next.templateUrl === "partials/login.html") {
-                    angular.element("html").removeClass("login-pf")
+                    angular.element("html").removeClass("login-pf");
+                } else {
                 }
             });
             if($cookieStore.get('djangotoken')) {
