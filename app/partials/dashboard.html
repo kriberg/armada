@@ -12,6 +12,10 @@
         </div>
         <div>
             <h2>Characters</h2>
+            <p ng-hide="characters.length > 0" class="text-center">
+               No characters are registered yet :/
+               Try adding some API keys in the menu to the top right.
+            </p>
             <ul class="list-inline">
                 <li ng-repeat="character in characters | orderBy: 'skillPoints':true" class="col-md-4 col-sm-12">
                     <character-box-extended character="character" skill="character.skillInTraining[0]"></character-box-extended>
