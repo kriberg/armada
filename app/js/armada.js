@@ -1,47 +1,111 @@
 (function () {
     'use strict';
 
-    function Configuration($routeProvider, $httpProvider) {
+    function Configuration($stateProvider, $httpProvider, $urlRouterProvider) {
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
-        $routeProvider.
-            when('/', {
+        $urlRouterProvider.otherwise('/');
+        $stateProvider
+            .state('dashboard', {
+                url: '/',
                 templateUrl: 'partials/dashboard.html',
                 controller: 'DashboardController'
-            }).
+            })
             /*when('/characters', {
              templateUrl: 'partials/characters.html',
              controller: 'CharacterList'
              }).*/
-            when('/login', {
+            .state('login', {
+                url: '/login',
                 templateUrl: 'partials/login.html',
                 controller: 'LoginController'
-            }).
-            when('/tour', {
+            })
+            .state('tour', {
+                url: '/tour',
                 templateUrl: 'partials/tour.html',
                 controller: 'TourController'
-            }).
-            when('/evemail', {
+            })
+            .state('evemail', {
+                url: '/evemail',
                 templateUrl: 'partials/evemail.html',
                 controller: 'EVEMailController'
-            }).
-            when('/apikeys', {
+            })
+            .state('characters', {
+                url: '/characters',
+                templateUrl: 'partials/character_list.html',
+                controller: 'CharacterListController'
+            })
+            .state('characters.details', {
+                url: '/:characterID',
+                views: {
+                    'content@characters': {
+                        templateUrl: 'partials/character_details.html',
+                        controller: 'CharacterDetailsController'
+                    }
+                }
+            })
+            .state('characters.details.sheet', {
+                url: '/sheet',
+                views: {
+                    'tab@characters.details': {
+                        templateUrl: 'partials/character_details_sheet.html',
+                        controller: 'CharacterDetailsSheetController'
+                    }
+                }
+            })
+            .state('characters.details.skills', {
+                url: '/skills',
+                views: {
+                    'tab@characters.details': {
+                        templateUrl: 'partials/character_details_skills.html',
+                        controller: 'CharacterDetailsSkillsController'
+                    }
+                }
+            })
+            .state('characters.details.wallet', {
+                url: '/wallet',
+                views: {
+                    'tab@characters.details': {
+                        templateUrl: 'partials/character_details_wallet.html'
+                    }
+                }
+            })
+            .state('characters.details.wallet.balance', {
+                url: '/balance',
+                views: {
+                    'wallet@characters.details.wallet': {
+                        templateUrl: 'partials/character_details_wallet_balance.html',
+                        controller: 'CharacterDetailsWalletBalanceController'
+                    }
+                }
+            })
+            .state('characters.details.wallet.transactions', {
+                url: '/transactions',
+                views: {
+                    'wallet@characters.details.wallet': {
+                        templateUrl: 'partials/character_details_wallet_transactions.html',
+                        controller: 'CharacterDetailsWalletTransactionsController'
+                    }
+                }
+            })
+            .state('apikeys', {
+                url: '/apikeys',
                 templateUrl: 'partials/apikeys.html',
                 controller: 'APIKeyController'
-            }).
-            otherwise({
-                redirectTo: '/'
             });
+
     }
 
     angular
         .module('armadaApp', [
             'http-auth-interceptor',
             'ngRoute',
+            'ui.router',
             'ngCookies',
             'ngSanitize',
             'ui.bootstrap',
             'ngResource',
+            'nvd3',
             'angularUtils.directives.dirPagination',
             'stationspinnerServices',
             'loginControllers',
@@ -50,9 +114,15 @@
             'evestatusControllers',
             'tourControllers',
             'evemailControllers',
-            'apikeyControllers'
+            'apikeyControllers',
+            'characterListControllers',
+            'characterDetailsControllers',
+            'characterDetailsWalletTransactionsControllers',
+            'characterDetailsWalletBalanceControllers',
+            'characterDetailsSkillsControllers',
+            'characterDetailsSheetControllers'
         ])
-        .config(['$routeProvider', '$httpProvider', Configuration])
+        .config(['$stateProvider', '$httpProvider', '$urlRouterProvider', Configuration])
         .config(function($resourceProvider) {
             $resourceProvider.defaults.stripTrailingSlashes = false;
         })
@@ -62,6 +132,7 @@
         .filter('shortify', [Shortify])
         .filter('humanify', [Humanify])
         .filter('romanify', [Romanify])
+        .filter('iskify', [Iskify])
         .run(function($cookieStore, $rootScope, $http, $location) {
             $rootScope.$on('$routeChangeStart', function(event, next, current) {
                 if ($rootScope.loggedInUser == null) {

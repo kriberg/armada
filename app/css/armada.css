@@ -62,7 +62,7 @@ character-box-extended div.skill-training {
 span.mail-label {
 
 }
-div.mail-spacer {
+div.spacer {
     margin: 20px 0px;
 }
 
@@ -78,4 +78,15 @@ mail-display dl.dl-horizontal dt {
 }
 mail-display dl.dl-horizontal dd {
     margin-left: 70px;
+}
+
+.number {
+    font-family: monospace;
+}
+span.buy {
+    color: #ff484d;
+}
+
+span.sell {
+    color: inherit;
 }

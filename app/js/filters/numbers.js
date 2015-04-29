@@ -1,4 +1,5 @@
 function Shortify() {
+    "use strict";
     return function (value) {
         var digits = String(value).split('.')[0];
 
@@ -17,6 +18,13 @@ function Shortify() {
 function Humanify() {
     return function (value) {
         return $.number(parseFloat(value), 0, '.', ',');
+    }
+}
+
+function Iskify() {
+    "use strict";
+    return function (value) {
+        return $.number(parseFloat(value), 2, '.', ',');
     }
 }
 

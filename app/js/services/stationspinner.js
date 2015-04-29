@@ -28,6 +28,10 @@
         service.Mail = $resource('/api/evemail/Mail/:messageID/', {messageID: '@messageID'});
         service.SearchLanguages = $resource('/api/evemail/Languages/');
 
+        /* economist services */
+
+        service.CharacterWallet = $resource('/api/economist/CharacterWallet/');
+
         return service;
     }
 

@@ -5,9 +5,9 @@
     </div>
     <div class="col-md-9">
     <ul class="list list-unstyled">
-        <li>{{character.name}}</li>
+        <li><a ui-sref="characters.details({characterID: character.characterID})">{{character.name}}</a></li>
         <li>{{character.corporationName}}</li>
-        <li ng-if="character.allianceName">{{character.allianceName}}</li>
+        <li>{{character.allianceName}}&nbsp;</li>
     </ul>
     </div>
 </div>

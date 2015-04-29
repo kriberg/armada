@@ -82,7 +82,7 @@
         <button class="btn btn-default" ng-click="toggleAllFilters(false)">Clear</button>
     </div>
     <div class="col-md-5">
-        <div class="mail-spacer"></div>
+        <div class="spacer"></div>
         <form ng-submit="getMail()" class="seach">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Search evemail..." ng-model="searchQuery">
@@ -102,10 +102,10 @@
                 </div>
             </div>
         </form>
-        <div class="mail-spacer"></div>
+        <div class="spacer"></div>
         <button ng-click="markAllRead()" class="btn btn-default">Mark all as read</button>
         <em> Last updated: {{lastRefresh|date:'shortTime'}}.</em>
-        <div class="mail-spacer"></div>
+        <div class="spacer"></div>
         <table class="table table-hover mail-table">
             <tr dir-paginate="mail in mails | orderBy:orderField:true | itemsPerPage: 15" current-page="currentPage" ng-click="selectMail(mail)">
                 <td ng-class="{active: activeMail===mail}">

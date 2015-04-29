@@ -5,7 +5,7 @@
     </div>
     <div class="col-md-9">
         <ul class="list list-unstyled">
-            <li><a ng-href=""><strong>{{character.name}}</strong></a></li>
+            <li><a ui-sref="characters.details.sheet({characterID: character.characterID})"><strong>{{character.name}}</strong></a></li>
             <li><a ng-href="">{{character.corporationName}}</a></li>
             <li><a ng-href="">{{character.allianceName}}</a>&nbsp;</li>
             <li>{{character.skillPoints|shortify}} sp, {{character.balance|shortify}} isk</li>
