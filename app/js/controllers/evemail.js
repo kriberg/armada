@@ -134,7 +134,7 @@
         $scope.selectMail = function (mail, $event) {
             if(!mail.read) {
                 mail.read = true;
-                $http.post('/evemail/MailStatus/', {'messageIDs': mail.messageID});
+                $http.post('/api/evemail/MailStatus/', {'messageIDs': mail.messageID});
             }
             $scope.activeMail = mail;
         };
@@ -147,7 +147,7 @@
                     mail.read = true;
                 }
             });
-            $http.post('/evemail/MailStatus/', {'messageIDs': messageIDs});
+            $http.post('/api/evemail/MailStatus/', {'messageIDs': messageIDs});
         };
 
 

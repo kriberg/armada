@@ -7,26 +7,26 @@
 
         /* accounting services */
 
-        service.Capsuler = $resource('/accounting/capsuler/');
-        service.APIKey = $resource('/accounting/apikeys/:id/', {id: '@id'});
-        service.MissingTraining = $resource('/accounting/missing-training/');
+        service.Capsuler = $resource('/api/accounting/capsuler/');
+        service.APIKey = $resource('/api/accounting/apikeys/:id/', {id: '@id'});
+        service.MissingTraining = $resource('/api/accounting/missing-training/');
 
         /* char services */
 
-        service.CharacterSheet = $resource('/char/CharacterSheet/:characterID/', {characterID: '@characterID'});
-        service.Notifications = $resource('/char/Notifications/');
-        service.SkillInTraining = $resource('/char/SkillInTraining/:characterID/', {characterID: '@characterID'});
-        service.DistinctCorporations = $resource('/char/DistinctCorporations/');
-        service.DistinctAlliances = $resource('/char/DistinctAlliances/');
+        service.CharacterSheet = $resource('/api/char/CharacterSheet/:characterID/', {characterID: '@characterID'});
+        service.Notifications = $resource('/api/char/Notifications/');
+        service.SkillInTraining = $resource('/api/char/SkillInTraining/:characterID/', {characterID: '@characterID'});
+        service.DistinctCorporations = $resource('/api/char/DistinctCorporations/');
+        service.DistinctAlliances = $resource('/api/char/DistinctAlliances/');
 
         /* corp services */
 
-        service.CorporationSheet = $resource('/corp/CorporationSheet/:corporationID/', {corporationID: '@corporationID'});
+        service.CorporationSheet = $resource('/api/corp/CorporationSheet/:corporationID/', {corporationID: '@corporationID'});
 
         /* evemail services */
 
-        service.Mail = $resource('/evemail/Mail/:messageID/', {messageID: '@messageID'});
-        service.SearchLanguages = $resource('/evemail/Languages/');
+        service.Mail = $resource('/api/evemail/Mail/:messageID/', {messageID: '@messageID'});
+        service.SearchLanguages = $resource('/api/evemail/Languages/');
 
         return service;
     }
