@@ -6,11 +6,13 @@ function Shortify() {
 
         if(digits.length > 6 && digits.length < 10) {
             return $.number(parseFloat(value)/1000000, 2, '.', ',') + "m";
-        } else if(digits.length > 10) {
+        } else if(digits.length >= 10) {
             return $.number(parseFloat(value)/1000000000, 2, '.', ',') + "b";
-        } else {
+        } else if(digits.length <= 6) {
             // less than a million, slap on a k!
             return $.number(parseFloat(value)/1000, 2, '.', ',') + "k";
+        } else {
+            return $.number(parseFloat(value), 2, '.', ',');
         }
     }
 }
