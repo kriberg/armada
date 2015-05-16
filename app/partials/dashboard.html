@@ -12,7 +12,7 @@
         </div>
         <div>
             <h2>Characters</h2>
-            <p ng-hide="characters.length > 0" class="text-center">
+            <p ng-show="noCharacters" class="text-center">
                No characters are registered yet :/
                Try adding some API keys in the menu to the top right.
             </p>
@@ -28,7 +28,7 @@
             <h2 class="h5">Notifications</h2>
         </div>
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="note in notifications| orderBy: 'sentDate':true |limitTo: 10">
+            <li class="list-group-item" dir-paginate="note in notifications| orderBy: 'sentDate':true | itemsPerPage: 8" current-page="currentPage">
                 <span class="badge">{{note.sentDate|date:'MMM dd, HH:mm'}}</span>
                 <h4 class="list-group-item-heading">{{note.senderName}} <i class="fa fa-angle-double-right"></i> {{note.owner.name}}</h4>
                 <p class="list-group-item-text">
@@ -36,19 +36,8 @@
                 </p>
             </li>
         </ul>
-        <ul class="pager">
-            <li class="next">
-                <button type="button" class="btn btn-default pull-left" ng-class="{newest: disabled}">
-                    <span class="i fa fa-angle-left"></span>
-                    Newer
-                </button>
-            </li>
-            <li class="previous">
-                <button type="button" class="btn btn-default pull-right" ng-class="{oldest: disabled}">
-                    Older
-                    <span class="i fa fa-angle-right"></span>
-                </button>
-            </li>
-        </ul>
+        <div class="text-center">
+            <dir-pagination-controls template-url="js/directives/dirPagination-newold.tpl.html"></dir-pagination-controls>
+        </div>
     </div>
 </div>

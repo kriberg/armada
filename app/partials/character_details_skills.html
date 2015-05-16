@@ -1,10 +1,15 @@
-<div class="row">
-    <div class="col-md-8">
-        <ul class="list-unstyled">
-            <li ng-repeat="skill in character.skills">{{skill.typeName}} {{skill.level}}</li>
-        </ul>
-    </div>
-    <div class="col-md-4">
-
-    </div>
+<div class="spacer"></div>
+<div>
+    <accordion close-others="false">
+        <div ng-repeat="(skill_group, group_skills) in character.skills | groupBy: 'skill_group'"  class="col-md-4">
+            <accordion-group heading="{{skill_group}}" is-open="false">
+                <ul class="list-unstyled ">
+                    <li ng-repeat="skill in group_skills | orderBy: 'typeName'">
+                        <eve-skill skill="skill"></eve-skill>
+                    </li>
+                </ul>
+            </accordion-group>
+            <div class="spacer"></div>
+        </div>
+    </accordion>
 </div>

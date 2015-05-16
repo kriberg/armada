@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-12">
+        <ul class="list list-inline">
+            <li class="pull-left">
+                <img ng-src="/img/skills/{{skill.level == 5 && 'fullyTrainedFrame.png' || 'levelTrainedFrame.png'}}" alt="skill level">
+            </li>
+            <li class="pull-left">
+                <ul class="list list-unstyled">
+                    <li><strong>{{skill.typeName}}</strong></li>
+                    <li>Skill Points: {{skill.skillpoints|humanify}}</li>
+                </ul>
+            </li>
+            <li class="pull-right">
+                <ul class="list list-unstyled text-right">
+                    <li><strong>Level {{skill.level}}</strong></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

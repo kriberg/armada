@@ -13,7 +13,10 @@
 <body>
     <div ng-include src="'partials/navbar.html'"></div>
     <div ui-view class="container-fluid"></div>
-
+    <div class="col-md-offset-2 col-md-8 text-center">
+        <i class="fa fa-copyright"></i> 2009-2015 by Vittoros, Kristian Berg | All <a ui-sref="legal">Eve Related Materials</a> are Property of
+        <a href="https://ccpgames.com/">CCP Games</a> | <a ui-sref="legal">Legal Notice</a>
+    </div>
     <script src="js/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="js/bower_components/jquery-number/jquery.number.min.js"></script>
     <script src="js/bower_components/patternfly/dist/js/patternfly.min.js"></script>
@@ -24,10 +27,12 @@
     <script src="js/bower_components/angular-resource/angular-resource.js"></script>
     <script src="js/bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="js/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="js/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="js/bower_components/angular-utils-pagination/dirPagination.js"></script>
     <script src="js/bower_components/d3/d3.min.js"></script>
     <script src="js/bower_components/nvd3/nv.d3.min.js"></script>
     <script src="js/bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+    <script src="js/bower_components/angular-filter/dist/angular-filter.min.js"></script>
     <script src="js/http-auth-interceptor.js"></script>
     <script src="js/filters/numbers.js"></script>
     <script src="js/armada.js"></script>
@@ -50,6 +55,7 @@
     <script src="js/directives/active-link.js"></script>
     <script src="js/directives/api-key.js"></script>
     <script src="js/directives/mail-display.js"></script>
+    <script src="js/directives/eve-skill.js"></script>
 </body>
 </html>
 

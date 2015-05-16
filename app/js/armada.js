@@ -11,6 +11,10 @@
                 templateUrl: 'partials/dashboard.html',
                 controller: 'DashboardController'
             })
+            .state('legal', {
+                url: '/legal',
+                templateUrl: 'partials/legal.html'
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'partials/login.html',
@@ -101,6 +105,7 @@
             'ngSanitize',
             'ui.bootstrap',
             'ngResource',
+            'angular.filter',
             'nvd3',
             'angularUtils.directives.dirPagination',
             'stationspinnerServices',
@@ -123,7 +128,7 @@
             $resourceProvider.defaults.stripTrailingSlashes = false;
         })
         .config(function(paginationTemplateProvider) {
-            paginationTemplateProvider.setPath('js/directives/dirPagination.tpl.html');
+            paginationTemplateProvider.setPath('js/directives/dirPagination-numberbar.tpl.html');
         })
         .filter('shortify', [Shortify])
         .filter('humanify', [Humanify])
