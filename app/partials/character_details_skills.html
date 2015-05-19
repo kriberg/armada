@@ -1,8 +1,29 @@
-<div class="spacer"></div>
-<div>
+<div class="row">
+    <form class="search-pf has-button col-md-2">
+        <div class="search-pf-input-group">
+            <label for="filterSkills" class="sr-only">Filter</label>
+            <input id="filterSkills" type="search" class="form-control" placeholder="Filter" ng-model="nameFilter">
+        </div>
+    </form>
+    <div class="col-md-2">
+        <span>Skill ordering</span>
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-sm btn-default" ng-click="groupBy=0">by category</button>
+            <button class="btn btn-sm btn-default" ng-click="groupBy=1">by level</button>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <span>Toggle</span>
+        <div class="btn-group" role="group" aria-label="...">
+            <button class="btn btn-sm btn-default" ng-click="collapse(false)">open all</button>
+            <button class="btn btn-sm btn-default" ng-click="collapse(true)">close all</button>
+        </div>
+    </div>
+</div>
+<div class="row">
     <accordion close-others="false">
-        <div ng-repeat="(skill_group, group_skills) in character.skills | groupBy: 'skill_group'"  class="col-md-4">
-            <accordion-group heading="{{skill_group}}" is-open="false">
+        <div ng-repeat="(skill_group, group_skills) in character.skills |pick: filterSkills | groupBy: groupBySelector[groupBy]"  class="col-md-4">
+            <accordion-group heading="{{heading(skill_group)}} - {{summarize(group_skills)}}" is-open="false">
                 <ul class="list-unstyled ">
                     <li ng-repeat="skill in group_skills | orderBy: 'typeName'">
                         <eve-skill skill="skill"></eve-skill>

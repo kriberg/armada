@@ -6,7 +6,11 @@
         <strong>{{character.name}}</strong>
     </li>
 </ol>
-<h1>{{character.name}}</h1>
+<h1>
+    <img ng-src="https://image.eveonline.com/Character/{{character.characterID}}_64.jpg"
+         alt="" class="portrait">
+    {{character.name}}
+</h1>
 <ul class="nav nav-tabs">
     <li ui-sref-active="active">
         <a ui-sref="characters.details.sheet({

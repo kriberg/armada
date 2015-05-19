@@ -18,7 +18,7 @@
             }, function (data) {
                 $scope.transactions = data.results;
                 $scope.transactionsPagination.total = data.count;
-                $scope.transactionsPagination.currentPage = pageNumber
+                $scope.transactionsPagination.currentPage = pageNumber;
             });
         };
 

@@ -1,1 +1,90 @@
-<h2>Sheet</h2>
+<div class="row">
+    <div class="col-md-4">
+        <h4>Overview</h4>
+        <dl class="dl-horizontal">
+            <dt>Skill points</dt><dd>{{character.skillPoints|humanify}}</dd>
+            <dt>Home station</dt><dd><a ng-href="https://evemaps.dotlan.net/station/{{character.homeStation}}">{{character.homeStation}}</a></dd>
+            <dt>Background</dt><dd>{{character.race}} - {{character.bloodLine}} - {{character.ancestry}}</dd>
+            <dt>Date of Birth</dt><dd>{{character.DoB|date:'yyyy.MM.dd HH:mm:ss':'UTC'}}</dd>
+            <dt>Corporation</dt><dd><a ng-href="https://evemaps.dotlan.net/corp/{{character.corporationName}}">{{character.corporationName}}</a></dd>
+            <dt ng-show="character.allianceID">Alliance</dt><dd ng-show="character.allianceID"><a ng-href="https://evemaps.dotlan.net/alliance/{{character.allianceName}}">{{character.allianceName}}</a></dd>
+            <dt>Balance</dt><dd>{{character.balance|iskify}} ISK</dd>
+            <dt>Jump fatigue</dt>
+            <dd>
+                <span ng-hide="isFatigued(character.jumpFatigue)">No fatigue</span>
+                <span ng-show="isFatigued(character.jumpFatigue)">Expires {{character.jumpFatigue|date:'yyyy.MM.dd HH:mm:ss':'UTC'}}</span>
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-2">
+        <h4>Base attributes</h4>
+        <dl class="dl-horizontal">
+            <dt>Perception</dt><dd>{{character.perception}}</dd>
+            <dt>Memory</dt><dd>{{character.memory}}</dd>
+            <dt>Willpower</dt><dd>{{character.willpower}}</dd>
+            <dt>Intelligence</dt><dd>{{character.intelligence}}</dd>
+            <dt>Charisma</dt><dd>{{character.charisma}}</dd>
+            <hr>
+            <dt>Bonus Remaps Available</dt><dd>{{character.freeRespecs}}</dd>
+        </dl>
+    </div>
+    <div class="col-md-offset-2 col-md-4">
+        <h4>Augmentations</h4>
+        <ul class="list-unstyled">
+            <li ng-repeat="implant in character.implants"><eve-type type="implant" hover="true"></eve-type></li>
+        </ul>
+        <span ng-hide="character.implants.length > 0">- No implants -</span>
+    </div>
+</div>
+<div class="spacer"></div>
+<div class="row">
+    <div class="col-md-4">
+        <h4>Currently training</h4>
+        <div class="row">
+            <div class="col-md-12 skill-training">
+                <ul ng-show="character.skillInTraining.length > 0" class="list list-inline" ng-repeat="skill in character.skillInTraining">
+                    <li class="pull-left">
+                        <ul class="list list-unstyled">
+                            <li><eve-type type="skill" hover="true" icon="false"></eve-type></li>
+                            <li>Skill Points: {{skill.trainingStartSP|humanify}} / {{skill.trainingDestinationSP|humanify}}</li>
+                        </ul>
+                    </li>
+                    <li class="pull-right">
+                        <ul class="list list-unstyled text-right">
+                            <li>Level {{skill.trainingToLevel}}</li>
+                            <li>Finishes {{skill.trainingEndTime|date:'MMM d, HH:mm'}}</li>
+                        </ul>
+                    </li>
+                </ul>
+                <span ng-show="character.skillInTraining.length == 0" style="color: #D2413A">- No skill in training -</span>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <h4>Training Queue</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <span ng-hide="character.skillQueue.length > 0">No extra skills in queue.</span>
+                <ol ng-show="character.skillQueue.length > 0">
+                    <li ng-repeat="skill in character.skillQueue|orderBy:'queuePosition'">
+                        <eve-type type="skill" hover="true" icon="false"></eve-type>
+                        <span class="pull-right">Level {{skill.level}}</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-offset-2 col-md-4">
+        <h4>Jump clones</h4>
+        <span ng-hide="character.jumpClones.length > 0">No jump clones installed</span>
+        <accordion ng-show="character.jumpClones.length > 0">
+            <accordion-group ng-repeat="clone in character.jumpClones" is-open="false" class="text-small">
+                <accordion-heading>{{clone.location}}</accordion-heading>
+                <span ng-hide="clone.jumpCloneImplants.length > 0">- No implants -</span>
+                <ul class="list-unstyled" ng-show="clone.jumpCloneImplants">
+
+                    <li ng-repeat="implant in clone.jumpCloneImplants"><eve-type type="implant" hover="true"></eve-type></li>
+                </ul>
+            </accordion-group>
+        </accordion>
+    </div>
+</div>

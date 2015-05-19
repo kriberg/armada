@@ -1,15 +1,18 @@
 (function () {
     'use strict';
 
-    function CharacterDetailsSheetController($scope, $interval) {
+    function CharacterDetailsSheetController($scope) {
         $scope.character = $scope.$parent.character;
-        //$interval(function(){$scope.$parent.refresh();}, 300000);
+        $scope.isFatigued = function(fatigueDate) {
+            var d1 = new Date(fatigueDate);
+
+            return d1 > Date.now();
+        }
     }
 
     angular.
         module('characterDetailsSheetControllers', []).
         controller('CharacterDetailsSheetController', [
             '$scope',
-            '$interval',
             CharacterDetailsSheetController]);
 }());
