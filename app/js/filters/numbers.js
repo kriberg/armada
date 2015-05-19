@@ -33,8 +33,9 @@ function Iskify() {
 function Romanify() {
     "use strict";
     return function (value) {
-        if(value <= 5 && value > 0) {
-            switch(value) {
+        var num = parseInt(value);
+        if(num <= 5 && num > 0) {
+            switch(num) {
                 case 1:
                     return 'I';
                 case 2:
@@ -46,6 +47,8 @@ function Romanify() {
                 case 5:
                     return 'V';
             }
+        } else {
+            return value;
         }
     }
 }
