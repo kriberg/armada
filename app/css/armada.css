@@ -67,6 +67,10 @@ div.spacer {
     margin: 20px 0px;
 }
 
+ul.nav-tabs {
+    margin-bottom: 20px;
+}
+
 table.mail-table tr {
     margin-bottom: 10px;
 }
@@ -90,4 +94,8 @@ span.buy {
 
 span.sell {
     color: inherit;
+}
+
+footer.legal-notice {
+    height: 20px;
 }
