@@ -1,0 +1,5 @@
+<span class="eve-type">
+    <img ng-show="icon" ng-src="{{type.typeID|eveImage32}}" alt="" />
+    <a ng-show="hover" href tooltip-html-unsafe="{{description}}">{{type.typeName}}</a>
+    <span ng-hide="hover">{{type.typeName}}</span>
+</span>
