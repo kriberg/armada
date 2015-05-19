@@ -14,10 +14,13 @@
         /* char services */
 
         service.CharacterSheet = $resource('/api/char/CharacterSheet/:characterID/', {characterID: '@characterID'});
-        service.Notifications = $resource('/api/char/Notifications/');
+        service.Notifications = $resource('/api/char/Notifications/', {}, {
+            'query': {method: 'GET', isArray: false}});
         service.SkillInTraining = $resource('/api/char/SkillInTraining/:characterID/', {characterID: '@characterID'});
         service.DistinctCorporations = $resource('/api/char/DistinctCorporations/');
         service.DistinctAlliances = $resource('/api/char/DistinctAlliances/');
+        service.WalletTransactions = $resource('/api/char/WalletTransactions/', {}, {
+            'query': {method: 'GET', isArray: false}});
 
         /* corp services */
 
@@ -31,6 +34,10 @@
         /* economist services */
 
         service.CharacterWallet = $resource('/api/economist/CharacterWallet/');
+
+        /* sde services */
+
+        service.InvType = $resource('/api/sde/InvType/:typeID/', {typeID: '@typeID'});
 
         return service;
     }
