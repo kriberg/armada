@@ -134,6 +134,8 @@
         .filter('humanify', [Humanify])
         .filter('romanify', [Romanify])
         .filter('iskify', [Iskify])
+        .filter('eveImage32', [EveImage32])
+        .filter('eveImage64', [EveImage64])
         .run(function($cookieStore, $rootScope, $http, $location) {
             $rootScope.$on('$routeChangeStart', function(event, next, current) {
                 if ($rootScope.loggedInUser == null) {
