@@ -42,20 +42,20 @@
         <h4>Currently training</h4>
         <div class="row">
             <div class="col-md-12 skill-training">
-                <ul ng-show="character.skillInTraining.length > 0" class="list list-inline" ng-repeat="skill in character.skillInTraining">
-                    <li class="pull-left">
+                <div ng-show="character.skillInTraining.length > 0" ng-repeat="skill in character.skillInTraining">
+                    <span class="pull-left">
                         <ul class="list list-unstyled">
                             <li><eve-type type="skill" hover="true" icon="false"></eve-type></li>
                             <li>Skill Points: {{skill.trainingStartSP|humanify}} / {{skill.trainingDestinationSP|humanify}}</li>
                         </ul>
-                    </li>
-                    <li class="pull-right">
-                        <ul class="list list-unstyled text-right">
-                            <li>Level {{skill.trainingToLevel}}</li>
+                    </span>
+                    <span class="pull-right text-right">
+                        <ul class="list list-unstyled">
+                            <li>Level <strong>{{skill.trainingToLevel}}</strong></li>
                             <li>Finishes {{skill.trainingEndTime|date:'MMM d, HH:mm'}}</li>
                         </ul>
-                    </li>
-                </ul>
+                    </span>
+                </div>
                 <span ng-show="character.skillInTraining.length == 0" style="color: #D2413A">- No skill in training -</span>
             </div>
         </div>
@@ -67,7 +67,7 @@
                 <ol ng-show="character.skillQueue.length > 0">
                     <li ng-repeat="skill in character.skillQueue|orderBy:'queuePosition'">
                         <eve-type type="skill" hover="true" icon="false"></eve-type>
-                        <span class="pull-right">Level {{skill.level}}</span>
+                        <span class="pull-right text-right">Level <strong>{{skill.level}}</strong></span>
                     </li>
                 </ol>
             </div>
