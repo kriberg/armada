@@ -99,3 +99,10 @@ span.sell {
 footer.legal-notice {
     height: 20px;
 }
+
+img.notification-icon {
+    height: 32px;
+    width: 32px;
+    border-radius: 5px;
+    background-color: #ffffff;
+}

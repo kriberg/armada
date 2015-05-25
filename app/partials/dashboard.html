@@ -28,16 +28,17 @@
             <h2 class="h5">Notifications</h2>
         </div>
         <ul class="list-group">
-            <li class="list-group-item" dir-paginate="note in notifications| orderBy: 'sentDate':true | itemsPerPage: 8" current-page="currentPage">
+            <li class="list-group-item" dir-paginate="note in notifications| orderBy: 'sentDate':true | itemsPerPage: 8" current-page="notificationsPagination.currentPage" total-items="notificationsPagination.total">
                 <span class="badge">{{note.sentDate|date:'MMM dd, HH:mm'}}</span>
                 <h4 class="list-group-item-heading">{{note.senderName}} <i class="fa fa-angle-double-right"></i> {{note.owner.name}}</h4>
                 <p class="list-group-item-text">
+                    <img class="notification-icon" ng-src="img/notifications/notificationIcon_{{note.typeID}}.png" alt=""/>
                     {{note.parsed_message}}
                 </p>
             </li>
         </ul>
         <div class="text-center">
-            <dir-pagination-controls template-url="js/directives/dirPagination-newold.tpl.html"></dir-pagination-controls>
+            <dir-pagination-controls on-page-change="getNotificationsPage(newPageNumber)" template-url="js/directives/dirPagination-newold.tpl.html"></dir-pagination-controls>
         </div>
     </div>
 </div>
