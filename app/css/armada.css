@@ -100,6 +100,13 @@ footer.legal-notice {
     height: 20px;
 }
 
+.login-pf footer.legal-notice {
+    bottom: 0%;
+    position: absolute;
+    height: 70px;
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
 img.notification-icon {
     height: 32px;
     width: 32px;
