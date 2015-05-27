@@ -106,7 +106,7 @@
             'ui.bootstrap',
             'ngResource',
             'angular.filter',
-            'nvd3',
+            //'nvd3',
             'angularUtils.directives.dirPagination',
             'stationspinnerServices',
             'loginControllers',
