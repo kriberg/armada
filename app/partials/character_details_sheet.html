@@ -31,7 +31,7 @@
     <div class="col-md-offset-2 col-md-4">
         <h4>Augmentations</h4>
         <ul class="list-unstyled">
-            <li ng-repeat="implant in character.implants"><eve-type type="implant" hover="true"></eve-type></li>
+            <li ng-repeat="implant in character.implants"><eve-type type="implant" hover="true" icon="true"></eve-type></li>
         </ul>
         <span ng-hide="character.implants.length > 0">- No implants -</span>
     </div>
@@ -82,7 +82,7 @@
                 <span ng-hide="clone.jumpCloneImplants.length > 0">- No implants -</span>
                 <ul class="list-unstyled" ng-show="clone.jumpCloneImplants">
 
-                    <li ng-repeat="implant in clone.jumpCloneImplants"><eve-type type="implant" hover="true"></eve-type></li>
+                    <li ng-repeat="implant in clone.jumpCloneImplants"><eve-type type="implant" hover="true" icon="true"></eve-type></li>
                 </ul>
             </accordion-group>
         </accordion>
