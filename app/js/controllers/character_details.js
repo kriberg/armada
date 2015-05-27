@@ -9,7 +9,6 @@
             Stationspinner.CharacterSheet.get({characterID: $stateParams.characterID}).$promise.then(function (character) {
                 $scope.character = character;
                 $scope.name = character.name;
-                console.log($scope.name + ' updated ' + Date.now().toString());
             });
         };
         $interval(function(){$scope.refresh();}, 60000);
