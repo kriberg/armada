@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12" ui-view="content">
+        <ol class="breadcrumb">
+            <li class="active">
+                Characters
+            </li>
+        </ol>
+        <div ng-repeat="character in characters|orderBy:'skillPoints':true" class="col-md-3">
+            <div class="row">
+                <div class="col-md-3">
+                    <img ng-src="http://image.eveonline.com/Character/{{character.characterID}}_64.jpg"
+                         alt="{{character.name}} portrait" class="rounded">
+                </div>
+                <div class="col-md-9">
+                    <ul class="list list-unstyled">
+                        <li><a ui-sref="characters.details.sheet({
+                            characterID: character.characterID,
+                            characterName: character.name
+                        })">{{character.name}}</a></li>
+                        <li>{{character.corporationName}}</li>
+                        <li>{{character.allianceName}}&nbsp;</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
