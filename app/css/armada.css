@@ -36,7 +36,7 @@ character-box-extended {
     padding: 10px 10px;
 }
 
-img.portrait {
+img.rounded {
     border-radius: 5px;
 }
 
@@ -53,7 +53,7 @@ character-box-extended div.skill-training {
     margin-top: 10px;
 }
 
-.nav, .pagination, .carousel, .panel-title a {
+.nav, .pagination, .carousel, .panel-title a a.clickable {
     cursor: pointer;
 }
 
@@ -112,4 +112,152 @@ img.notification-icon {
     width: 32px;
     border-radius: 5px;
     background-color: #ffffff;
+}
+.equal, .equal > div[class*='col-'] {
+    display: flex;
+    flex:1 1 auto;
+}
+
+div.spinner-container {
+    margin: 10em 0em;
+}
+
+.animate-repeat.ng-enter,
+.animate-repeat.ng-leave
+{
+    -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    text-overflow: clip;
+    white-space:nowrap;
+}
+
+.animate-repeat.ng-leave.ng-leave-active,
+.animate-repeat.ng-enter {
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+}
+
+.animate-repeat.ng-enter.ng-enter-active,
+.animate-repeat.ng-leave {
+    opacity: 1;
+    width: 150px;
+    height: 30px;
+}
+
+.spacing-top {
+    margin-top: 10rem;
+}
+
+.small-spacing-top {
+    margin-top: 2rem;
+}
+
+.spacing-bottom {
+    margin-bottom: 10rem;
+}
+
+.small-spacing-bottom {
+    margin-bottom: 2rem;
+}
+
+div.inventory-icon {
+    position: relative;
+    width: 64px;
+    margin: 0 auto;
+}
+
+
+div.inventory-icon img {
+    z-index: -1;
+}
+div.inventory-icon div {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    font-size: 8pt;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 3px;
+    border: 1px solid #000000;
+    padding: 0px 3px;
+    min-width: 25px;
+    color: #FFFFFF;
+}
+
+li.inventory {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+li.inventory small {
+  font-size: 1rem;
+}
+
+li.inventory .container {
+  padding-left: 4rem;
+}
+
+ul.navbar-secondary {
+    background: #F6F6F6 none repeat scroll 0% 0%;
+    border-bottom: 1px solid #CECDCD;
+    padding: 0px;
+    width: 100%;
+    display: block;
+    float: none;
+    left: 0px;
+    position: absolute;
+    font-size: 14px;
+}
+
+ul.navbar-secondary li a {
+    background-color: transparent;
+    box-sizing: border-box;
+    color: #4D5258;
+    display: block;
+    line-height: 14px;
+    padding-bottom: 9px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 9px;
+    position: relative;
+    text-decoration: none !important;
+    text-decoration-color: #4D5258;
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    text-shadow: none;
+
+}
+
+ul.navbar-secondary > li.active:before,
+ul.navbar-secondary > li.active:hover:before {
+    background: #0099d3;
+    bottom: -1px;
+    content: '';
+    display: block;
+    height: 2px;
+    left: 20px;
+    position: absolute;
+    right: 20px;
+}
+ul.navbar-secondary > li.active > a,
+ul.navbar-secondary > li.active > a:hover,
+ul.navbar-secondary > li.active:hover > a {
+    color: #0099d3 !important;
+}
+
+ul.navbar-secondary > li.active .active > a {
+    color: #f1f1f1;
+}
+
+ul.navbar-secondary > li > a:hover {
+    color: #222222;
+}
+ul.navbar-secondary > li > a:focus {
+    outline: none !important;
+    background-color: transparent !important;
 }
