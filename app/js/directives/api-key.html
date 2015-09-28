@@ -22,17 +22,15 @@
     </div>
     <div ng-show="key.id">
         <div ng-show="key.type">
-        <div class="form-group">
-            <label class="col-md-4 control-label">Expires</label>
-
-            <div class="col-md-4">
-                            <span ng-hide="key.expired">
-                                <span ng-hide="key.expires.indexOf('2033') == 0">{{key.expires|date:'MMM dd yyyy, HH:mm'}}</span>
-                                <span ng-show="key.expires.indexOf('2033') == 0">Never</span>
-                            </span>
-            <span ng-show="key.expired"
-                  class="bg-danger">This key expired {{key.expires|date:'MMM dd yyyy, HH:mm'}}!</span>
-            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label">Expires</label>
+                <div class="col-md-4">
+                    <span ng-if="!key.expired">
+                        <span ng-if="key.expires.indexOf('2033') == 0">{{key.expires|date:'MMM dd yyyy, HH:mm'}}</span>
+                        <span ng-if="key.expires.indexOf('2033') == 0">Never</span>
+                    </span>
+                    <span ng-if="key.expired" class="bg-danger">This key expired {{key.expires|date:'MMM dd yyyy, HH:mm'}}!</span>
+                </div>
         </div>
         <div class="form-group">
             <label class="col-md-4 control-label">Type</label>
@@ -48,7 +46,7 @@
                 <ul class="list list-inline">
                     <li ng-repeat="character in key.associated_characters">
                         <img ng-src="http://image.eveonline.com/Character/{{character.characterID}}_32.jpg"
-                             alt="{{character.name}} portrait" class="portrait">
+                             alt="{{character.name}} portrait" class="rounded">
                         {{character.name}}
                     </li>
                     <li ng-hide="key.associated_characters.length">None</li>
@@ -61,7 +59,7 @@
                 <ul class="list list-inline">
                     <li ng-repeat="corporation in key.associated_corporations">
                         <img ng-src="http://image.eveonline.com/Corporation/{{corporation.corporationID}}_32.png"
-                             alt="{{corporation.corporationName}} logo" class="portrait">
+                             alt="{{corporation.corporationName}} logo" class="rounded">
                         {{corporation.corporationName}}
                     </li>
                 </ul>

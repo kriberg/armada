@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function LoginController($scope,
@@ -42,7 +42,7 @@
         }
     }
 
-    angular.
+    return angular.
         module('loginControllers', []).
         controller('LoginController', [
             '$scope',
@@ -53,4 +53,4 @@
             'authService',
             LoginController
         ]);
-}());
+};

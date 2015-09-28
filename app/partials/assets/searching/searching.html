@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-sm-12 col-md-12">
+        <div class="page-header">
+            <h1>Combined asset searching</h1>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-2">
+                <h4>Characters</h4>
+                <armada-id-selector selection="characterSelection"
+                                    values="availableCharacters"
+                                    display="'name'"
+                                    identifier="'characterID'">
+                </armada-id-selector>
+            </div>
+            <div class="col-md-offset-1 col-md-5">
+                <h4>Search</h4>
+                <div class="row">
+                    <form class="search-pf has-button col-md-12">
+                        <div class="form-group has-clear">
+                            <div class="search-pf-input-group">
+                                <label for="searchAssets" class="sr-only">Search</label>
+                                <input id="searchAssets" type="search" class="form-control" placeholder="Where is my stuff..." ng-model="searchText">
+                                <button type="button" class="clear" aria-hidden="true" ng-show="searchText.length > 0" ng-click="searchText=''"><span class="pficon pficon-close"></span></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="submit" ng-click="searchAssets()"><span class="fa fa-search"></span>Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-offset-1 col-md-2">
+                <h4>Search hints</h4>
+                <p class="text-muted">
+                    You can search by item names, types, locations,
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" ng-repeat="asset in assets">
+        <ul class="list list-unstyled">
+            <li ng-repeat="asset in assets">
+                {{asset.item_name}} {{asset.typeName}} {{asset.locationName}}
+            </li>
+        </ul>
+    </div>
+</div>

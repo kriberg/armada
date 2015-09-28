@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function EVEMailController($scope,
@@ -169,7 +169,7 @@
         });
     }
 
-    angular.
+    return angular.
         module('evemailControllers', []).
         controller('EVEMailController', [
             '$scope',
@@ -180,4 +180,4 @@
             '$cookieStore',
             'Stationspinner',
             EVEMailController]);
-}());
+};

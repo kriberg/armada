@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function CharacterDetailsController($stateParams, $scope, $interval, Stationspinner) {
@@ -14,7 +14,7 @@
         $interval(function(){$scope.refresh();}, 60000);
     }
 
-    angular.
+    return angular.
         module('characterDetailsControllers', []).
         controller('CharacterDetailsController', [
             '$stateParams',
@@ -22,4 +22,4 @@
             '$interval',
             'Stationspinner',
             CharacterDetailsController]);
-}());
+};

@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function NavbarController($scope, $interval, $cookieStore, $http, $rootScope, $location, Stationspinner) {
@@ -28,7 +28,7 @@
         $interval(function(){$scope.refresh();}, 300000);
     }
 
-    angular.
+    return angular.
         module('navbarControllers', ['ui.bootstrap']).
         controller('NavbarController', [
             '$scope',
@@ -39,4 +39,4 @@
             '$location',
             'Stationspinner',
             NavbarController]);
-}());
+};

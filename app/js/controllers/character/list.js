@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function CharacterListController($scope, $interval, Stationspinner) {
@@ -13,7 +13,7 @@
         $scope.foo = 'foo';
     }
 
-    angular.
+    return angular.
         module('characterListControllers', []).
         controller('CharacterListController', ['$scope', '$interval', 'Stationspinner', CharacterListController]);
-}());
+};

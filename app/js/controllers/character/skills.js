@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function CharacterDetailsSkillsController($scope, $filter) {
@@ -38,10 +38,10 @@
     }
 
 
-    angular.
+    return angular.
         module('characterDetailsSkillsControllers', []).
         controller('CharacterDetailsSkillsController', [
             '$scope',
             '$filter',
             CharacterDetailsSkillsController]);
-}());
+};

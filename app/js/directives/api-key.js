@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function APIKey() {
@@ -12,7 +12,7 @@
         };
     }
 
-    angular
+    return angular
         .module('armadaApp')
         .directive('apiKey', APIKey);
-}());
+};

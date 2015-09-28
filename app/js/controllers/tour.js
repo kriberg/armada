@@ -1,10 +1,10 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function TourController($scope) {
     }
 
-    angular.
+    return angular.
         module('tourControllers', []).
         controller('TourController', ['$scope', TourController]);
-}());
+};

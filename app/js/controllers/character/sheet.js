@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function CharacterDetailsSheetController($scope) {
@@ -10,9 +10,9 @@
         }
     }
 
-    angular.
+    return angular.
         module('characterDetailsSheetControllers', []).
         controller('CharacterDetailsSheetController', [
             '$scope',
             CharacterDetailsSheetController]);
-}());
+};

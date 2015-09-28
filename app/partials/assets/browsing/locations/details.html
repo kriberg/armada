@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12">
+        <ol class="breadcrumb">
+            <li>
+                <a ui-sref="assets.locations({})">Locations</a>
+            </li>
+            <li ng-if="region" ng-class="{'active': !solarSystem}">
+                <a ui-sref="assets.browsing.locations.list({locationIDs: selectedLocation.regionID})" ng-if="solarSystem">{{selectedLocation.regionName}}</a>
+                <strong ng-if="!solarSystem">{{selectedLocation.regionName}}</strong> <span ng-if="!solarSystem">{{selectedLocation.value|shortify}} ISK, {{selectedLocation.volume|shortify}} m<sup>3</sup></span>
+            </li>
+            <li ng-if="solarSystem" class="active">
+                <strong>{{selectedLocation.solarSystemName}}</strong>
+                {{selectedLocation.value|shortify}} ISK, {{selectedLocation.volume|shortify}} m<sup>3</sup>
+            </li>
+        </ol>
+    </div>
+    <div class="col-md-4" ng-repeat="location in locations|orderBy:assetOrdering:orderDirection">
+        <h4>
+            <a ui-sref="assets.inventory({locationID: location.locationID})">
+                {{location.name}}
+            </a>
+            <br/>
+            <small>{{location.value|shortify}} ISK, {{location.volume|shortify}} m<sup>3</sup></small>
+        </h4>
+    </div>
+</div>

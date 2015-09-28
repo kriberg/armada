@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function DashboardController($scope, $interval, Stationspinner) {
@@ -27,12 +27,12 @@
                 $scope.notifications = data.results;
                 $scope.notificationsPagination.total = data.count;
                 $scope.notificationsPagination.currentPage = pageNumber;
-                sidebar();
+                //sidebar();
             });
         };
         $scope.getNotificationsPage($scope.notificationsPagination.currentPage);
 
-        sidebar();
+        //sidebar();
 
         $scope.refresh = function () {
             $scope.characters = Stationspinner.CharacterSheet.query();
@@ -42,7 +42,7 @@
         $interval(function(){$scope.refresh();}, 300000);
     }
 
-    angular.
+    return angular.
         module('dashboardControllers', []).
         controller('DashboardController', ['$scope', '$interval', 'Stationspinner', DashboardController]);
-}());
+};

@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function CharacterBoxExtended () {
@@ -15,4 +15,4 @@
     angular
         .module('armadaApp')
         .directive('characterBoxExtended', CharacterBoxExtended);
-}());
+};

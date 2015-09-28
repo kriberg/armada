@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function ActiveLink(location) {
@@ -19,7 +19,7 @@
         };
     }
 
-    angular
+    return angular
         .module('armadaApp')
         .directive('activeLink', ['$location', ActiveLink]);
-}());
+};

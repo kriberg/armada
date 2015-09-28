@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function Configuration($stateProvider, $httpProvider, $urlRouterProvider) {
@@ -32,14 +32,14 @@
             })
             .state('characters', {
                 url: '/characters',
-                templateUrl: 'partials/character_list.html',
+                templateUrl: 'partials/character/list.html',
                 controller: 'CharacterListController'
             })
             .state('characters.details', {
                 url: '/:characterID',
                 views: {
                     'content@characters': {
-                        templateUrl: 'partials/character_details.html',
+                        templateUrl: 'partials/character/details.html',
                         controller: 'CharacterDetailsController'
                     }
                 }
@@ -48,7 +48,7 @@
                 url: '/sheet',
                 views: {
                     'tab@characters.details': {
-                        templateUrl: 'partials/character_details_sheet.html',
+                        templateUrl: 'partials/character/sheet.html',
                         controller: 'CharacterDetailsSheetController'
                     }
                 }
@@ -57,7 +57,7 @@
                 url: '/skills',
                 views: {
                     'tab@characters.details': {
-                        templateUrl: 'partials/character_details_skills.html',
+                        templateUrl: 'partials/character/skills.html',
                         controller: 'CharacterDetailsSkillsController'
                     }
                 }
@@ -66,7 +66,7 @@
                 url: '/wallet',
                 views: {
                     'tab@characters.details': {
-                        templateUrl: 'partials/character_details_wallet.html'
+                        templateUrl: 'partials/character/economy/view.html'
                     }
                 }
             })
@@ -74,7 +74,7 @@
                 url: '/balance',
                 views: {
                     'wallet@characters.details.wallet': {
-                        templateUrl: 'partials/character_details_wallet_balance.html',
+                        templateUrl: 'partials/character/economy/balance.html',
                         controller: 'CharacterDetailsWalletBalanceController'
                     }
                 }
@@ -83,7 +83,7 @@
                 url: '/transactions',
                 views: {
                     'wallet@characters.details.wallet': {
-                        templateUrl: 'partials/character_details_wallet_transactions.html',
+                        templateUrl: 'partials/character/economy/transactions.html',
                         controller: 'CharacterDetailsWalletTransactionsController'
                     }
                 }
@@ -92,11 +92,72 @@
                 url: '/apikeys',
                 templateUrl: 'partials/apikeys.html',
                 controller: 'APIKeyController'
-            });
+            })
+            .state('assets', {
+                url: '/assets',
+                templateUrl: '../partials/assets/details.html'
+            })
+            .state('assets.browsing', {
+                url: '/browse',
+                views: {
+                    'assets@assets': {
+                        templateUrl: 'partials/assets/browsing/view.html',
+                        controller: 'AssetsBrowsingListController'
+                    }
+                }
+            })
+            .state('assets.browsing.locations', {
+                url: '/locations',
+                views: {
+                    'assets_browsing@assets.browsing': {
+                        templateUrl: 'partials/assets/browsing/locations/list.html',
+                        controller: 'AssetLocationsListController'
+                    }
+                }
+
+            })
+            .state('assets.browsing.locations.list', {
+                url: '/:locationIDs',
+                views: {
+                    'assets_browsing@assets.browsing': {
+                        templateUrl: 'partials/assets/browsing/locations/details.html',
+                        controller: 'AssetLocationsDetailsController'
+                    }
+                }
+
+            })
+            .state('assets.browsing.inventory', {
+                url: '/inventory/:locationID',
+                views: {
+                    'assets_browsing@assets.browsing': {
+                        templateUrl: 'partials/assets/browsing/inventory/list.html',
+                        controller: 'AssetInventoryController'
+                    }
+                }
+            })
+            .state('assets.browsing.inventory.container', {
+                url: '/:containerID',
+                views: {
+                    'assets_browsing@assets.browsing': {
+                        templateUrl: 'partials/assets/browsing/inventory/list.html',
+                        controller: 'AssetInventoryController'
+                    }
+                }
+            })
+            .state('assets.searching', {
+                url: '/search',
+                views: {
+                    'assets@assets': {
+                        templateUrl: '../partials/assets/searching/searching.html',
+                        controller: 'AssetsSearchingController'
+                    }
+                }
+            })
+        ;
 
     }
 
-    angular
+    return angular
         .module('armadaApp', [
             'http-auth-interceptor',
             'ngRoute',
@@ -106,13 +167,15 @@
             'ui.bootstrap',
             'ngResource',
             'angular.filter',
-            //'nvd3',
             'angularUtils.directives.dirPagination',
+            'nya.bootstrap.select',
+            'armadaSettingsServices',
             'stationspinnerServices',
+            'colorizeServices',
             'loginControllers',
             'dashboardControllers',
             'navbarControllers',
-            'evestatusControllers',
+            'eveStatusControllers',
             'tourControllers',
             'evemailControllers',
             'apikeyControllers',
@@ -121,23 +184,29 @@
             'characterDetailsWalletTransactionsControllers',
             'characterDetailsWalletBalanceControllers',
             'characterDetailsSkillsControllers',
-            'characterDetailsSheetControllers'
+            'characterDetailsSheetControllers',
+            'assetsBrowsingControllers',
+            'assetLocationsListControllers',
+            'assetLocationsDetailsControllers',
+            'assetInventoryControllers',
+            'assetsSearchingControllers'
         ])
         .config(['$stateProvider', '$httpProvider', '$urlRouterProvider', Configuration])
-        .config(function($resourceProvider) {
+        .config(function ($resourceProvider) {
             $resourceProvider.defaults.stripTrailingSlashes = false;
         })
-        .config(function(paginationTemplateProvider) {
+        .config(function (paginationTemplateProvider) {
             paginationTemplateProvider.setPath('js/directives/dirPagination-numberbar.tpl.html');
         })
-        .filter('shortify', [Shortify])
-        .filter('humanify', [Humanify])
-        .filter('romanify', [Romanify])
-        .filter('iskify', [Iskify])
-        .filter('eveImage32', [EveImage32])
-        .filter('eveImage64', [EveImage64])
-        .run(function($cookieStore, $rootScope, $http, $location) {
-            $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        .filter('shortify', [FiltersNumbers.Shortify])
+        .filter('humanify', [FiltersNumbers.Humanify])
+        .filter('romanify', [FiltersNumbers.Romanify])
+        .filter('quantify', [FiltersNumbers.Quantify])
+        .filter('iskify', [FiltersNumbers.Iskify])
+        .filter('eveImage32', [FiltersEveImage.EveImage32])
+        .filter('eveImage64', [FiltersEveImage.EveImage64])
+        .run(function ($cookieStore, $rootScope, $http, $location) {
+            $rootScope.$on('$routeChangeStart', function (event, next, current) {
                 if ($rootScope.loggedInUser == null) {
                     // User is not logged in, store their destination, then
                     // redirect to login.
@@ -146,16 +215,16 @@
                         $rootScope.destination = next;
                     }
                 }
-                if(!next.templateUrl === "partials/login.html") {
+                if (!next.templateUrl === "partials/login.html") {
                     angular.element("html").removeClass("login-pf");
                 } else {
                 }
             });
-            if($cookieStore.get('djangotoken')) {
+            if ($cookieStore.get('djangotoken')) {
                 $http.defaults.headers.common['Authorization'] = 'Token ' + $cookieStore.get('djangotoken');
             } else {
                 $location.path('/login');
             }
 
         });
-})();
+};

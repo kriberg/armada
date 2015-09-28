@@ -1,0 +1,29 @@
+<div class="row text-center spinner-container" ng-if="loadingLocationList">
+    <div class="spinner spinner-lg"></div>
+    <h2>loading locations...</h2>
+</div>
+<div class="row" ng-if="!loadingAssetlocations">
+    <div ng-repeat-start="region in regions|orderBy:assetOrdering:orderDirection" class="col-md-3">
+        <h2>
+            <a ui-sref="assets.browsing.locations.list({
+                        locationIDs: region.locationID
+                  })">{{region.name}}</a>
+            <small>{{region.value|shortify}} ISK, {{region.volume|shortify}} m<sup>3</sup></small>
+        </h2>
+        <div class="row">
+            <div class="col-md-6" ng-repeat="solarSystem in solarSystems|filter:{region: region.name}|orderBy:assetOrdering:orderDirection">
+                  <h5>
+                      <a ui-sref="assets.browsing.locations.list({
+                            locationIDs: solarSystem.locationID
+                      })">{{solarSystem.name}}</a>
+                      <br/>
+                      <small>{{solarSystem.value|shortify}} ISK, {{solarSystem.volume|shortify}} m<sup>3</sup></small>
+                  </h5>
+            </div>
+        </div>
+    </div>
+    <div ng-repeat-end ng-if="($index+1)%4==0" class="clearfix"></div>
+</div>
+
+
+

@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function CharacterDetailsWalletBalanceController($scope, $stateParams, $interval, Stationspinner) {
@@ -45,7 +45,7 @@
         }
     }
 
-    angular.
+    return angular.
         module('characterDetailsWalletBalanceControllers', []).
         controller('CharacterDetailsWalletBalanceController', [
             '$scope',
@@ -53,4 +53,4 @@
             '$interval',
             'Stationspinner',
             CharacterDetailsWalletBalanceController]);
-}());
+};

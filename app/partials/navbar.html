@@ -45,6 +45,9 @@
             <li ui-sref-active="active">
                 <a ui-sref="evemail">EVE Mail</a>
             </li>
+            <li ui-sref-active="active">
+                <a ui-sref="assets">Assets</a>
+            </li>
             <li ng-repeat="corporation in corporations" ui-sref-active="active">
                 <a ui-sref="corporation({corporationName: corporation.corporationName})">
                     {{corporation.corporationName}}

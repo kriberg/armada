@@ -10,6 +10,13 @@
                     <button ng-click="saveKey(newKey)" class="btn btn-primary">Save</button>
                 </div>
             </div>
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li ng-repeat="msg in messages">
+                        <span ng-class="msg.class">{{msg.text}}</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="col-md-12">
@@ -20,6 +27,7 @@
                     <form class="form-horizontal">
                         <api-key key="key"></api-key>
                         <ul class="list list-inline text-right">
+                            <li><button ng-click="revalidateKey(key)" class="btn btn-default">Revalidate</button></li>
                             <li><button ng-click="deleteKey(key)" class="btn btn-danger">Delete</button></li>
                             <li><button ng-click="saveKey(key)" class="btn btn-primary">Update</button></li>
                         </ul>

@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function EveStatus () {
@@ -46,6 +46,6 @@
         .directive('eveStatus', EveStatus);
 
     angular.
-        module('evestatusControllers', []).
+        module('eveStatusControllers', []).
         controller('EveStatusController', ['$scope', '$interval', '$http', EveStatusController]);
-}());
+};

@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function MailDisplay () {
@@ -15,4 +15,4 @@
         .module('armadaApp')
         .directive('mailDisplay', MailDisplay);
 
-}());
+};

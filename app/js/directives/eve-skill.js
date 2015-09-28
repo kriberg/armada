@@ -1,4 +1,4 @@
-(function () {
+module.exports = function () {
     'use strict';
 
     function EveSkill () {
@@ -14,4 +14,4 @@
     angular
         .module('armadaApp')
         .directive('eveSkill', EveSkill);
-}());
+};
