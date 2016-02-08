@@ -40,7 +40,7 @@
     "angular": "1.4.6",
     "angular-sanitize": "1.4.x",
     "angular-cookies": "1.4.x",
-    "angular-bootstrap": "x",
+    "angular-ui-bootstrap": "0.14.x",
     "angular-resource": "1.4.x",
     "angular-route": "1.4.x",
     "angular-animate": "1.4.x",
@@ -49,6 +49,9 @@
     "jquery": "2.1.x",
     "angular-utils-pagination": "0.8.x",
     "angular-ui-router": "0.2.x",
-    "nya-bootstrap-select": "~2.0.10"
+    "nya-bootstrap-select": "~2.0.10",
+    "ng-fx": "~2.0.4",
+    "angular-http-auth": "~1.2.1",
+    "flexboxgrid": "~6.3.0"
   }
 }

@@ -8,32 +8,71 @@ module.exports = function () {
         $stateProvider
             .state('dashboard', {
                 url: '/',
-                templateUrl: 'partials/dashboard.html',
-                controller: 'DashboardController'
+                views: {
+                    'top_content': {
+                        templateUrl: 'partials/dashboard.html',
+                        controller: 'DashboardController'
+                    },
+                    'login' : {
+                        templateUrl: 'partials/login.html',
+                        controller: 'LoginController'
+                    },
+                    'navbar': {
+                        templateUrl: 'partials/navbar.html',
+                        controller: 'NavbarController'
+                    }
+                }
             })
             .state('legal', {
                 url: '/legal',
-                templateUrl: 'partials/legal.html'
-            })
-            .state('login', {
-                url: '/login',
-                templateUrl: 'partials/login.html',
-                controller: 'LoginController'
-            })
-            .state('tour', {
-                url: '/tour',
-                templateUrl: 'partials/tour.html',
-                controller: 'TourController'
+                views: {
+                    'top_content': {
+                        templateUrl: 'partials/legal.html'
+                    },
+                    'navbar': {
+                        templateUrl: 'partials/navbar.html',
+                        controller: 'NavbarController'
+                    },
+                    'login' : {
+                        templateUrl: 'partials/login.html',
+                        controller: 'LoginController'
+                    }
+                }
             })
             .state('evemail', {
                 url: '/evemail',
-                templateUrl: 'partials/evemail.html',
-                controller: 'EVEMailController'
+                views: {
+                    'top_content': {
+                        templateUrl: 'partials/evemail.html',
+                        controller: 'EVEMailController'
+                    },
+                    'navbar': {
+                        templateUrl: 'partials/navbar.html',
+                        controller: 'NavbarController'
+                    },
+                    'login' : {
+                        templateUrl: 'partials/login.html',
+                        controller: 'LoginController'
+                    }
+                }
             })
             .state('characters', {
                 url: '/characters',
-                templateUrl: 'partials/character/list.html',
-                controller: 'CharacterListController'
+                views: {
+                    'top_content': {
+                        templateUrl: 'partials/character/list.html',
+                        controller: 'CharacterListController'
+                    },
+                    'navbar': {
+                        templateUrl: 'partials/navbar.html',
+                        controller: 'NavbarController'
+                    },
+                    'login' : {
+                        templateUrl: 'partials/login.html',
+                        controller: 'LoginController'
+                    }
+                }
+
             })
             .state('characters.details', {
                 url: '/:characterID',
@@ -90,20 +129,65 @@ module.exports = function () {
             })
             .state('apikeys', {
                 url: '/apikeys',
-                templateUrl: 'partials/apikeys.html',
-                controller: 'APIKeyController'
+                views: {
+                    'top_content': {
+                        templateUrl: 'partials/apikeys.html',
+                        controller: 'APIKeyController'
+                    },
+                    'navbar': {
+                        templateUrl: 'partials/navbar.html',
+                        controller: 'NavbarController'
+                    },
+                    'login' : {
+                        templateUrl: 'partials/login.html',
+                        controller: 'LoginController'
+                    }
+                }
             })
             .state('assets', {
                 url: '/assets',
-                templateUrl: '../partials/assets/details.html'
+                views: {
+                    'top_content': {
+                        templateUrl: 'partials/assets/assets.html',
+                        controller: 'AssetsController'
+                    },
+                    'navbar': {
+                        templateUrl: 'partials/navbar.html',
+                        controller: 'NavbarController'
+                    },
+                    'login' : {
+                        templateUrl: 'partials/login.html',
+                        controller: 'LoginController'
+                    }
+                }
+            })
+            .state('assets.summary', {
+                url: '/summary',
+                views: {
+                    'main@assets': {
+                        templateUrl: 'partials/assets/summary/summary.html',
+                        controller: 'AssetsSummaryController'
+                    },
+                    'title@assets': {
+                        template: 'Current net assets worth'
+                    }
+                }
             })
             .state('assets.browsing', {
                 url: '/browse',
                 views: {
-                    'assets@assets': {
+                    'main@assets': {
                         templateUrl: 'partials/assets/browsing/view.html',
-                        controller: 'AssetsBrowsingListController'
+                        controller: 'AssetsBrowsingController'
+                    },
+                    'toolbar@assets': {
+                        templateUrl: 'partials/assets/browsing/toolbar.html',
+                        controller: 'AssetsBrowsingToolbarController'
+                    },
+                    'title@assets': {
+                        template: 'Combined asset browsing'
                     }
+
                 }
             })
             .state('assets.browsing.locations', {
@@ -111,44 +195,56 @@ module.exports = function () {
                 views: {
                     'assets_browsing@assets.browsing': {
                         templateUrl: 'partials/assets/browsing/locations/list.html',
-                        controller: 'AssetLocationsListController'
+                        controller: 'AssetsLocationsListController'
                     }
                 }
 
             })
-            .state('assets.browsing.locations.list', {
-                url: '/:locationIDs',
+            .state('assets.browsing.location', {
+                url: '/location/:locationIDs',
                 views: {
                     'assets_browsing@assets.browsing': {
                         templateUrl: 'partials/assets/browsing/locations/details.html',
-                        controller: 'AssetLocationsDetailsController'
+                        controller: 'AssetsLocationsDetailsController'
                     }
                 }
-
             })
             .state('assets.browsing.inventory', {
-                url: '/inventory/:locationID',
+                url: '/inventory/:locationID/:containerID',
+                reloadOnSearch: false,
                 views: {
                     'assets_browsing@assets.browsing': {
                         templateUrl: 'partials/assets/browsing/inventory/list.html',
-                        controller: 'AssetInventoryController'
-                    }
-                }
-            })
-            .state('assets.browsing.inventory.container', {
-                url: '/:containerID',
-                views: {
-                    'assets_browsing@assets.browsing': {
-                        templateUrl: 'partials/assets/browsing/inventory/list.html',
-                        controller: 'AssetInventoryController'
+                        controller: 'AssetsInventoryController'
+                    },
+                    'toolbar@assets': {
+                        templateUrl: 'partials/assets/browsing/inventory/toolbar.html',
+                        controller: 'AssetsInventoryToolbarController'
                     }
                 }
             })
             .state('assets.searching', {
                 url: '/search',
                 views: {
-                    'assets@assets': {
-                        templateUrl: '../partials/assets/searching/searching.html',
+                    'main@assets': {
+                        templateUrl: 'partials/assets/searching/searching.html',
+                        controller: 'AssetsSearchingController'
+                    },
+                    'toolbar@assets': {
+                        templateUrl: 'partials/assets/searching/toolbar.html',
+                        controller: 'AssetsSearchingToolbarController'
+                    },
+                    'title@assets': {
+                        template: 'Combined asset searching'
+                    }
+                }
+            })
+            .state('assets.searching.query', {
+                url: '/:query',
+                reloadOnSearch: false,
+                views: {
+                    'main@assets': {
+                        templateUrl: 'partials/assets/searching/searching.html',
                         controller: 'AssetsSearchingController'
                     }
                 }
@@ -165,13 +261,23 @@ module.exports = function () {
             'ngCookies',
             'ngSanitize',
             'ui.bootstrap',
+            'ui.bootstrap.accordion',
+            'ui.bootstrap.carousel',
             'ngResource',
+            'ngAnimate',
+            'ng-fx',
             'angular.filter',
             'angularUtils.directives.dirPagination',
             'nya.bootstrap.select',
+            'patternfly',
+            'patternfly.charts',
             'armadaSettingsServices',
             'stationspinnerServices',
+            'assetToolbarServices',
+            'characterSelectorServices',
             'colorizeServices',
+            'accountServices',
+            'eveIconsServices',
             'loginControllers',
             'dashboardControllers',
             'navbarControllers',
@@ -185,11 +291,16 @@ module.exports = function () {
             'characterDetailsWalletBalanceControllers',
             'characterDetailsSkillsControllers',
             'characterDetailsSheetControllers',
+            'assetsControllers',
+            'assetsSummaryControllers',
             'assetsBrowsingControllers',
-            'assetLocationsListControllers',
-            'assetLocationsDetailsControllers',
-            'assetInventoryControllers',
-            'assetsSearchingControllers'
+            'assetsBrowsingToolbarControllers',
+            'assetsLocationsListControllers',
+            'assetsLocationsDetailsControllers',
+            'assetsInventoryControllers',
+            'assetsInventoryToolbarControllers',
+            'assetsSearchingControllers',
+            'assetsSearchingToolbarControllers'
         ])
         .config(['$stateProvider', '$httpProvider', '$urlRouterProvider', Configuration])
         .config(function ($resourceProvider) {
@@ -205,26 +316,15 @@ module.exports = function () {
         .filter('iskify', [FiltersNumbers.Iskify])
         .filter('eveImage32', [FiltersEveImage.EveImage32])
         .filter('eveImage64', [FiltersEveImage.EveImage64])
-        .run(function ($cookieStore, $rootScope, $http, $location) {
-            $rootScope.$on('$routeChangeStart', function (event, next, current) {
-                if ($rootScope.loggedInUser == null) {
-                    // User is not logged in, store their destination, then
-                    // redirect to login.
-                    if (next.templateUrl === "partials/login.html" || next.templateUrl === "partials/tour.html") {
-                    } else {
-                        $rootScope.destination = next;
-                    }
+        .run(function($cookies, $http, AccountService) {
+            if(!$http.defaults.headers.common['Authorization']) {
+                var authToken = $cookies.getObject('authtoken', null);
+                console.log('LE token', authToken);
+                if(authToken) {
+                    $http.defaults.headers.common['Authorization'] = 'Token ' + authToken.token;
+                    AccountService.tokenExpires = authToken.expires * 1000;
+                    AccountService.startRefreshTimer();
                 }
-                if (!next.templateUrl === "partials/login.html") {
-                    angular.element("html").removeClass("login-pf");
-                } else {
-                }
-            });
-            if ($cookieStore.get('djangotoken')) {
-                $http.defaults.headers.common['Authorization'] = 'Token ' + $cookieStore.get('djangotoken');
-            } else {
-                $location.path('/login');
             }
-
         });
 };

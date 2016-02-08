@@ -6,16 +6,28 @@
     <title>Armada</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
 </head>
-<body>
-    <div ng-include src="'partials/navbar.html'"></div>
-    <div ui-view class="container-fluid"></div>
-    <footer class="footer col-md-offset-2 col-md-8 text-center legal-notice">
-        <hr>
-        <i class="fa fa-copyright"></i> 2009-2015 by Vittoros, Kristian Berg | All <a ui-sref="legal">Eve Related Materials</a> are Property of
-        <a href="https://ccpgames.com/">CCP Games</a> | <a ui-sref="legal">Legal Notice</a>
-    </footer>
+<body class="armada-login waiting-for-angular">
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <div id="login-holder" class="flex-content">
+        <div ui-view="login"></div>
+    </div>
+    <div id="loading-message">
+        <div class="flex-center">
+            <h1>Loading armada...</h1>
+            <p class="text-muted text-center">
+                Overheat MWD three cycles!
+            </p>
+            <div class="spinner spinner-lg"></div>
+        </div>
+    </div>
+    <div id="content">
+        <div ui-view="navbar"></div>
+        <div ui-view="top_content" class="container-fluid"></div>
+    </div>
     <script type="text/javascript" src="armada.js"></script>
 </body>
 </html>

@@ -1,17 +1,38 @@
 module.exports = function () {
     'use strict';
 
-    function AssetLocationsListController($scope, $interval, $timeout, Stationspinner) {
+    function AssetsLocationsListController($scope, $interval, $timeout, $filter, Stationspinner, CharacterSelector, AssetToolbar) {
         $scope.regions = [];
         $scope.solarSystems = [];
-        $scope.loadingAssetlocations = true;
+        $scope.filteredLocations = [];
+        $scope.AssetToolbar = AssetToolbar;
+        AssetToolbar.placeholderText = 'system name...';
+        $scope.loadingAssetlocations = false;
+
+        $scope.search = function(searchText) {
+            AssetToolbar.searchActive = true;
+            console.log('Searching', searchText);
+            $scope.filteredLocations.length = 0;
+            $scope.filteredLocations = $filter('filter')($scope.solarSystems, {name: searchText});
+            console.log($scope.filteredLocations);
+            AssetToolbar.searchActive = false;
+        };
+        $scope.clear = function () {
+            console.log('Clearing');
+            $scope.filteredLocations.length = 0;
+            AssetToolbar.searchText = '';
+        };
+        AssetToolbar.setSearchCallback($scope.search);
+        AssetToolbar.setClearCallback($scope.clear);
 
         $scope.loadAssetLocations = function () {
+            if($scope.loadingAssetlocations || !CharacterSelector.charactersHasLoaded) return;
+            console.log('loadAssetLocations', $scope.loadingAssetlocations, !CharacterSelector.charactersHasLoaded);
             $scope.loadingAssetlocations = true;
             $scope.regions.length = 0;
             $scope.solarSystems.length = 0;
             Stationspinner.AssetLocations.query({
-                characterIDs: $scope.$parent.characterSelection.join(',')
+                characterIDs: CharacterSelector.join_characterIDs()
             }).$promise.then(function (locations) {
                 var newRegions = {}, newSolarSystems = {};
                 angular.forEach(locations, function (location) {
@@ -46,13 +67,17 @@ module.exports = function () {
                 $scope.loadingAssetlocations = false;
             });
         };
-        $scope.loadAssetLocations();
 
-        $scope.loaderPromise = null;
-        $scope.$watchCollection('characterSelection', function () {
-            $timeout.cancel($scope.loaderPromise);
-            $scope.loaderPromise = $timeout(function () {
+        $scope.loaderTimer = null;
+        $scope.$watchCollection('CharacterSelector.characterSelection', function () {
+            if(!CharacterSelector.charactersHasLoaded) return;
+            console.log('CharacterSelector.characterSelection updated');
+            $timeout.cancel($scope.loaderTimer);
+            $scope.loaderTimer = $timeout(function () {
                 $scope.loadAssetLocations();
+                if($scope.filteredLocations.length > 0) {
+                    $scope.search(AssetToolbar.searchText, AssetToolbar.searchActive);
+                }
             }, 1000);
         });
 
@@ -62,11 +87,14 @@ module.exports = function () {
     }
 
     return angular
-        .module('assetLocationsListControllers', [])
-        .controller('AssetLocationsListController', [
+        .module('assetsLocationsListControllers', [])
+        .controller('AssetsLocationsListController', [
             '$scope',
             '$interval',
             '$timeout',
+            '$filter',
             'Stationspinner',
-            AssetLocationsListController]);
+            'CharacterSelector',
+            'AssetToolbar',
+            AssetsLocationsListController]);
 };

@@ -1,18 +1,21 @@
 module.exports = function () {
     'use strict';
 
-    function AssetLocationsDetailsController($stateParams, $scope, $interval, $timeout, Stationspinner) {
-        $scope.loadingLocationList = true;
+    function AssetsLocationsDetailsController($stateParams, $scope, $interval, $timeout, Stationspinner,
+                                             CharacterSelector, AssetToolbar) {
+        $scope.loadingLocationList = false;
+        $scope.AssetToolbar = AssetToolbar;
 
         $scope.loadLocationsList = function () {
+            if($scope.loadingLocationList || !CharacterSelector.charactersHasLoaded) return;
+            console.log('loadLocationsList', $scope.loadingLocationList, !CharacterSelector.charactersHasLoaded);
             $scope.loadingLocationList = true;
             var query_params = {
-                characterIDs: $scope.$parent.characterSelection.join(','),
+                characterIDs: CharacterSelector.join_characterIDs(),
                 locationIDs: $stateParams.locationIDs
             };
             return Stationspinner.AssetLocations.query(query_params).$promise.then(function (locations) {
                 $scope.locations = locations;
-                $scope.loadingLocationList = false;
                 if(locations.length > 1) $scope.location = locations[0];
                 if($stateParams.locationIDs.length == 8) {
                     switch($stateParams.locationIDs[0]) {
@@ -30,14 +33,16 @@ module.exports = function () {
                 if($scope.region || $scope.solarSystem) {
                     $scope.selectedLocation = locations[0];
                 }
+                $scope.loadingLocationList = false;
             });
         };
-        $scope.loadLocationsList();
 
-        $scope.loaderPromise = null;
-        $scope.$watchCollection('$parent.characterSelection', function() {
-            $timeout.cancel($scope.loaderPromise);
-            $scope.loaderPromise = $timeout(function () {
+        $scope.loaderTimer = null;
+        $scope.$watchCollection('CharacterSelector.characterSelection', function() {
+            if(!CharacterSelector.charactersHasLoaded) return;
+            console.log('CharacterSelector.characterSelection updated');
+            $timeout.cancel($scope.loaderTimer);
+            $scope.loaderTimer = $timeout(function () {
                 $scope.loadLocationsList();
             }, 1000);
         });
@@ -46,12 +51,14 @@ module.exports = function () {
     }
 
     return angular.
-        module('assetLocationsDetailsControllers', []).
-        controller('AssetLocationsDetailsController', [
+        module('assetsLocationsDetailsControllers', []).
+        controller('AssetsLocationsDetailsController', [
             '$stateParams',
             '$scope',
             '$interval',
             '$timeout',
             'Stationspinner',
-            AssetLocationsDetailsController]);
+            'CharacterSelector',
+            'AssetToolbar',
+            AssetsLocationsDetailsController]);
 };

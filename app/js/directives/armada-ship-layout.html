@@ -1,0 +1,129 @@
+<div class="row">
+    <div class="col-md-3">
+        <img ng-src="{{iconURL}}" alt="" class="rounded">
+        <dl class="list">
+            <dt>Name</dt>
+            <dd>{{activeItem.item_name}}</dd>
+            <dt>Type</dt>
+            <dd>{{activeItem.typeName}}</dd>
+            <dt>Owner</dt>
+            <dd>
+                <span ng-style="{'color': CharacterSelector.colorize(activeItem.owner)}">
+                    {{CharacterSelector.reverseIdentity(activeItem.owner)}}
+                </span>
+            </dd>
+            <dt>Ship value</dt>
+            <dd class="number">{{activeItem.item_value|iskify}} ISK</dd>
+            <dt>Cargo value</dt>
+            <dd class="number">{{activeItem.container_value|iskify}} ISK</dd>
+            <dt>Description</dt>
+            <dd ng-bind-html="shipDescription"></dd>
+        </dl>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-4">
+                <h2>High slots</h2>
+                <ul class="list list-unstyled">
+                    <li ng-repeat="item in high">
+                        <eve-type type="item" hover="true" icon="true" display-field="'name'"></eve-type>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h2>Med slots</h2>
+                <ul class="list list-unstyled">
+                    <li ng-repeat="item in med">
+                        <eve-type type="item" hover="true" icon="true" display-field="'name'"></eve-type>
+                        <div class="loaded-ammo" ng-if="hasAmmo(item)">[{{getAmmoName(item)}}]</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h2>Low slots</h2>
+                <ul class="list list-unstyled">
+                    <li ng-repeat="item in low">
+                        <eve-type type="item" hover="true" icon="true" display-field="'name'"></eve-type>
+                    </li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-4">
+                <h2>Rig slots</h2>
+                <ul class="list list-unstyled">
+                    <li ng-repeat="item in rigs">
+                        <eve-type type="item" hover="true" icon="true" display-field="'name'"></eve-type>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4" ng-if="subSystems.length > 0">
+                <h2>Subsystem slots</h2>
+                <ul class="list list-unstyled">
+                    <li ng-repeat="item in high">
+                        <eve-type type="item" hover="true" icon="true" display-field="'name'"></eve-type>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Drone bay</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list list-unstyled">
+                    <li ng-if="stackedDroneBay.length == 0">Empty</li>
+                    <li ng-repeat="drone in stackedDroneBay|orderBy:ordering:direction">
+                        <eve-type type="drone" hover="true" icon="true" display-field="'name'"></eve-type>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" ng-if="shipHangar.length > 0">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Ship hangar</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list list-unstyled">
+                    <li ng-if="shipHangar.length == 0">Empty</li>
+                    <li ng-repeat="item in shipHangar">
+                        <eve-type type="item" hover="true" icon="true" display-field="'name'"></eve-type>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3" ng-if="fleetHangar.length > 0">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Fleet hangar</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list list-unstyled">
+                    <li ng-if="fleetHangar.length == 0">Empty</li>
+                    <li ng-repeat="item in fleetHangar">
+                        <eve-type type="item" hover="true" icon="true" display-field="'name'"></eve-type>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Cargo bay</h3>
+            </div>
+            <div class="panel-body">
+                <armada-inventory-table contents="cargoBay" filter-text="filterText" ng-if="display == 'table'" ordering="ordering" direction="direction"></armada-inventory-table>
+                <armada-inventory-icons contents="cargoBay" filter-text="filterText" ng-if="display == 'icons'" ordering="ordering" direction="direction"></armada-inventory-icons>
+            </div>
+        </div>
+    </div>
+</div>

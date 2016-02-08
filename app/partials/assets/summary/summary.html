@@ -1,0 +1,17 @@
+<div class="row">
+    <div ng-if="CharacterSelection.characterSelection.length == 0" class="text-center">
+        <h2>Please select some characters</h2>
+    </div>
+    <div ng-if="CharacterSelector.hasCharactersSelected() && CharacterSelector.charactersHasLoaded">
+        <div class="col-md-6 text-center">
+            <h2>Distribution pie</h2>
+            <armada-chart-asset-distribution
+                    character-ids="CharacterSelector.characterSelection"></armada-chart-asset-distribution>
+        </div>
+        <div class="col-md-6 text-center">
+            <h2>Trend</h2>
+            <armada-chart-asset-worth
+                    character-ids="CharacterSelector.characterSelection"></armada-chart-asset-worth>
+        </div>
+    </div>
+</div>

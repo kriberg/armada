@@ -10,7 +10,7 @@ module.exports = function () {
         };
 
         service.get = function(unit, key) {
-            console.log('Loading setting:', [unit, key].join('_'))
+            console.log('Loading setting:', [unit, key].join('_'));
             return $cookies.getObject([unit, key].join('_'));
         };
 

@@ -21,16 +21,16 @@
     </div>
 </div>
 <div class="row">
-    <accordion close-others="false">
+    <uib-accordion close-others="false">
         <div ng-repeat="(skill_group, group_skills) in character.skills |pick: filterSkills | groupBy: groupBySelector[groupBy]"  class="col-md-4">
-            <accordion-group heading="{{heading(skill_group)}} - {{summarize(group_skills)}}" is-open="false">
+            <uib-accordion-group heading="{{heading(skill_group)}} - {{summarize(group_skills)}}" is-open="false">
                 <ul class="list-unstyled ">
                     <li ng-repeat="skill in group_skills | orderBy: 'typeName'">
                         <eve-skill skill="skill"></eve-skill>
                     </li>
                 </ul>
-            </accordion-group>
+            </uib-accordion-group>
             <div class="spacer"></div>
         </div>
-    </accordion>
+    </uib-accordion>
 </div>

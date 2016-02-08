@@ -162,10 +162,10 @@ module.exports = function () {
         }, 300000);
 
         angular.element(window).resize(function () {
-            sidebar();
+            //sidebar();
         });
         angular.element(document).ready(function () {
-            sidebar();
+            //sidebar();
         });
     }
 

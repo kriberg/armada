@@ -2,15 +2,15 @@
     <div class="col-md-12">
         <ol class="breadcrumb" ng-if="location">
             <li>
-                <a ui-sref="assets.locations({})">Locations</a>
+                <a ui-sref="assets.browsing.locations({})">Locations</a>
             </li>
             <li>
-                <a ui-sref="assets.locations.list({locationIDs: location.regionID})">{{location.regionName}}</a>
+                <a ui-sref="assets.browsing.location({locationIDs: location.regionID})">{{location.regionName}}</a>
             </li>
             <li>
-                <a ui-sref="assets.locations.list({locationIDs: location.solarSystemID})">{{location.solarSystemName}}</a>
+                <a ui-sref="assets.browsing.location({locationIDs: location.solarSystemID})">{{location.solarSystemName}}</a>
             </li>
-            <li class="active"> <strong>{{location.name}}:</strong>
+            <li class="active"><strong>{{location.name}}:</strong>
                 {{location.value|shortify}} ISK, {{location.volume|shortify}} m<sup>3</sup>
             </li>
         </ol>
@@ -21,87 +21,99 @@
             <h2 class="text-muted">Loading station contents</h2>
         </div>
     </div>
-    <div ng-if="!loadingContainers">
-        <div class="col-md-2">
-            <ul class="list list-unstyled">
-                <li class="inventory">
-                    <a href
-                       ng-class="{'active': selectedContainer == -1}"
-                       ng-if="!loadingContainers"
-                       ng-click="activateContainer(-1, -1)">
-                        Hangar
-                    </a>
-                    <small>{{location.value|shortify}} ISK, {{location.volume|shortify}} m<sup>3</sup></small>
-                </li>
-                <li class="inventory container"
-                    ng-repeat="container in topLevelContainers|orderBy:assetOrdering:orderDirection">
-                    <armada-inventory-container container="container"></armada-inventory-container>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-10">
-            <div class="row">
-                <div ng-if="loadingAssets" class="text-center spinner-container">
-                    <div class="spinner spinner-lg"></div>
-                    <h2 class="text-muted">Loading assets</h2>
-                </div>
-                <div ng-if="!loadingAssets">
-                    <div class="col-md-12 small-spacing-bottom">
-                        <div class="row">
-                            <div class="col-md-offset-6 col-md-4 search-pf-input-group">
-                                <input type="search" class="form-control" placeholder="Filter" ng-model="filterText">
-                            </div>
-                            <div class="btn-group col-md-2" aria-label="...">
-                                <label class="btn btn-sm btn-default" ng-model="inventoryDisplay" ng-change="saveSetting('inventoryDisplay', inventoryDisplay)" btn-radio="'icons'" uncheckable>
-                                    <img src="../../../../img/ui/icons.png" alt="">
-                                </label>
-                                <label class="btn btn-sm btn-default" ng-model="inventoryDisplay" ng-change="saveSetting('inventoryDisplay', inventoryDisplay)" btn-radio="'table'" uncheckable>
-                                    <img src="../../../../img/ui/list.png" alt="">
-                                </label>
-                            </div>
-                        </div>
+    <div class="col-md-3">
+        <ul class="list list-unstyled inventory-container-list">
+            <li ui-sref-active="active">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 container-icon">
+                        <img src="img/ui/item-hangar.png" alt=""/>
                     </div>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div ng-if="inventoryDisplay == 'icons'">
-                                <div class="col-md-2 text-center" ng-repeat-start="asset in currentContainer|filter:{name: filterText}|orderBy:assetOrdering:orderDirection">
-                                    <div class="inventory-icon">
-                                        <img ng-src="{{asset.typeID|eveImage64}}" class="rounded">
-                                        <div ng-if="!asset.singleton" class="text-right">
-                                            {{asset.quantity|quantify}}
-                                        </div>
-                                    </div>
-                                    {{asset.name}}<br>
-                                    <span ng-style="{'color': colorize(asset.owner)}">{{reverseIdentity(asset.owner)}}</span>
-                                </div>
-                                <div ng-repeat-end ng-if="($index+1) % 6 == 0" class="clearfix"></div>
-                            </div>
-                            <div ng-if="inventoryDisplay == 'table'">
-                                <div class="col-md-12">
-                                    <table class="table table-striped table-bordered table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Quantity</th>
-                                                <th>Volume</th>
-                                                <th>Value</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="asset in currentContainer|filter:{name: filterText}|orderBy:assetOrdering:orderDirection">
-                                                <td>{{asset.name}}<span class="pull-right" ng-style="{'color': colorize(asset.owner)}">{{reverseIdentity(asset.owner)}}</span></td>
-                                                <td class="text-right number">{{asset.quantity|humanify}}</td>
-                                                <td class="text-right number">{{asset.volume|humanify}}</td>
-                                                <td class="text-right number">{{asset.value|iskify}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div ng-if="currentContainer.length == 0 && !loadingAssets" class="text-center">
-                                <h2 class="text-muted">Empty</h2>
-                            </div>
-                        </div>
+                    <div class="col-xs-8 col-sm-9 col-md-9">
+                        <a ui-sref="assets.browsing.inventory({
+                            locationID: location.locationID,
+                            containerID: 0
+                            })">
+                            Item hangar
+                        </a>
+                        <br>
+                        <small>{{itemHangarValue|shortify}} ISK, {{itemHangarVolume|shortify}}
+                            m<sup>3</sup></small>
+                    </div>
+                </div>
+            </li>
+            <li ui-sref-active="active" class="inventory-container"
+                ng-repeat="container in itemHangarContainers|orderBy:AssetToolbar.assetOrdering:AssetToolbar.orderDirection">
+                <div class="row">
+                    <div class="col-xs-offset-1 col-xs-3 col-sm-offset-1 col-sm-2 col-md-offset-1 col-md-2 container-icon">
+                        <img ng-src="{{container.typeID|eveImage64}}" class="rounded">
+                    </div>
+                    <div class="col-xs-8 col-sm-9 col-md-9">
+                        <a ui-sref="assets.browsing.inventory({
+                            locationID: location.locationID,
+                            containerID: container.itemID
+                        })">
+                            {{container.itemName || container.name}}
+                        </a>
+                        <br>
+                        <small>{{container.container_value|shortify}} ISK, {{container.container_volume|shortify}}
+                            m<sup>3</sup></small>
+                    </div>
+                </div>
+            </li>
+            <li ui-sref-active="active">
+                <div class="row">
+                    <div class="col-xs-4 col-sm-3 col-md-3 container-icon">
+                        <img src="img/ui/ship-hangar.png" alt=""/>
+                    </div>
+                    <div class="col-xs-8 col-sm-9 col-md-9">
+                        <a ui-sref="assets.browsing.inventory({
+                            locationID: location.locationID,
+                            containerID: 1
+                            })">
+                            Ship hangar
+                        </a>
+                        <br>
+                        <small>{{shipHangarValue|shortify}} ISK, {{shipHangarVolume|shortify}}
+                            m<sup>3</sup></small>
+                    </div>
+                </div>
+            </li>
+            <li ui-sref-active="active" class="inventory-container"
+                ng-repeat="container in shipHangarContainers|orderBy:AssetToolbar.assetOrdering:AssetToolbar.orderDirection">
+                <div class="row">
+                    <div class="col-xs-offset-1 col-xs-3 col-sm-offset-1 col-sm-2 col-md-offset-1 col-md-2 container-icon">
+                        <img ng-src="{{container.typeID|eveImage64}}" class="rounded">
+                    </div>
+                    <div class="col-xs-8 col-sm-9 col-md-9">
+                        <a ui-sref="assets.browsing.inventory({
+                                    locationID: location.locationID,
+                                    containerID: container.itemID
+                                })">
+                            {{container.itemName || container.name}}
+                        </a>
+                        <br>
+                        <small>{{container.container_value|shortify}} ISK, {{container.container_volume|shortify}}
+                            m<sup>3</sup>
+                        </small>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div ng-if="loadingAssets" class="text-center spinner-container">
+                <div class="spinner spinner-lg"></div>
+                <h2 class="text-muted">Loading assets</h2>
+            </div>
+            <div ng-if="!loadingAssets">
+                <div class="col-md-12">
+                    <div ng-if="activeItem.category == 6">
+                        <armada-ship-layout active-item="activeItem" contents="currentContainer" ordering="AssetToolbar.assetOrdering" direction="AssetToolbar.orderDirection" filter-text="filterText" display="AssetToolbar.inventoryDisplay"></armada-ship-layout>
+                    </div>
+                    <div ng-if="activeItem.category != 6">
+                        <armada-inventory-icons contents="currentContainer" ordering="AssetToolbar.assetOrdering" direction="AssetToolbar.orderDirection" filter-text="filterText" ng-if="AssetToolbar.inventoryDisplay == 'icons'"></armada-inventory-icons>
+                        <armada-inventory-table contents="currentContainer" ordering="AssetToolbar.assetOrdering" direction="AssetToolbar.orderDirection" filter-text="filterText" ng-if="AssetToolbar.inventoryDisplay == 'table'"></armada-inventory-table>
                     </div>
                 </div>
             </div>

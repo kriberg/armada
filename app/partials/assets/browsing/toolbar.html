@@ -1,0 +1,50 @@
+<div class="col-md-offset-1 col-md-3">
+    <h4>Filter</h4>
+
+    <div class="row">
+        <form class="search-pf has-button col-md-12">
+            <div class="form-group has-clear">
+                <div class="search-pf-input-group">
+                    <label for="searchAssets" class="sr-only">Search</label>
+                    <input id="searchAssets" type="search" class="form-control"
+                           placeholder="{{AssetToolbar.placeholderText}}" ng-model="AssetToolbar.searchText">
+                    <button type="button" class="clear search-active" aria-hidden="true" ng-show="AssetToolbar.searchActive">
+                        <span class="spinner spinner-xs spinner-inline"></span>
+                    </button>
+                    <button type="button" class="clear" aria-hidden="true" ng-show="AssetToolbar.searchText.length > 0"
+                            ng-click="AssetToolbar.clear()"><span class="pficon pficon-close"></span>
+                    </button>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit" ng-click="AssetToolbar.search()"><span
+                        class="fa fa-search"></span>Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="col-md-offset-1 col-md-2">
+    <h4>Order</h4>
+
+    <div class="btn-group" aria-label="...">
+        <label class="btn btn-sm btn-default" ng-model="AssetToolbar.assetOrdering" btn-radio="'name'" uncheckable>
+            <span class="fa" ng-class="{'fa-sort-alpha-asc': !AssetToolbar.orderDirection, 'fa-sort-alpha-desc': AssetToolbar.orderDirection}"></span> Name
+        </label>
+        <label class="btn btn-sm btn-default" ng-model="AssetToolbar.assetOrdering" btn-radio="'value'" uncheckable>
+            <span class="fa fa-usd"></span> Value
+        </label>
+        <label class="btn btn-sm btn-default" ng-model="AssetToolbar.assetOrdering" btn-radio="'volume'" uncheckable>
+            <span class="fa" ng-class="{'fa-sort-amount-asc': !AssetToolbar.orderDirection, 'fa-sort-amount-desc': AssetToolbar.orderDirection}"></span> Volume
+        </label>
+    </div>
+</div>
+<div class="col-md-offset-1 col-md-2">
+    <h4>Sort</h4>
+
+    <div class="btn-group" aria-label="...">
+        <label class="btn btn-sm btn-default" ng-model="AssetToolbar.orderDirection" btn-radio="false" uncheckable><span class="fa fa-angle-up"></span> Ascending</label>
+        <label class="btn btn-sm btn-default" ng-model="AssetToolbar.orderDirection" btn-radio="true" uncheckable><span class="fa fa-angle-down"></span> Descending</label>
+    </div>
+</div>

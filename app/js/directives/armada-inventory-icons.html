@@ -1,0 +1,16 @@
+<div class="row" ng-if="contents.length > 0">
+    <div class="col-md-2 text-center"
+         ng-repeat-start="asset in contents|filter:{name: filterText}|orderBy:ordering:direction">
+        <div class="inventory-icon">
+            <img ng-src="{{asset.typeID|eveImage64}}" class="rounded">
+
+            <div ng-if="!asset.singleton" class="text-right">
+                {{asset.quantity|quantify}}
+            </div>
+        </div>
+        {{asset.name}}<br>
+        <span ng-style="{'color': CharacterSelector.colorize(asset.owner)}">{{CharacterSelector.reverseIdentity(asset.owner)}}</span>
+    </div>
+    <div ng-repeat-end ng-if="($index+1) % 6 == 0" class="clearfix"></div>
+</div>
+<h2 class="text-muted" ng-if="contents.length == 0">Empty</h2>

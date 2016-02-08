@@ -1,29 +1,23 @@
 module.exports = function () {
     'use strict';
 
-    function NavbarController($scope, $interval, $cookieStore, $http, $rootScope, $location, Stationspinner) {
+    function NavbarController($scope, $interval, $rootScope, Stationspinner, AccountService) {
         $scope.capsuler = null;
         $scope.corporations = [];
         $scope.logout = function() {
-            $cookieStore.remove('djangotoken');
-            $http.defaults.headers.common['Authorization'] = null;
-            $rootScope.loggedInUser = false;
-            $scope.capsuler = null;
-            $scope.corporations = [];
-            $location.path('/login');
+            AccountService.logout();
         };
 
         $scope.refresh = function () {
-            if($cookieStore.get('djangotoken')) {
-                $scope.capsuler = Stationspinner.Capsuler.get();
-                $scope.corporations = Stationspinner.CorporationSheet.query();
-            }
+            $scope.capsuler = Stationspinner.Capsuler.get({username: $rootScope.username});
+            $scope.corporations = Stationspinner.CorporationSheet.query();
         };
         $scope.refresh();
 
         $rootScope.$on('loggedIn', function(event, data) {
             $scope.refresh();
         });
+
 
         $interval(function(){$scope.refresh();}, 300000);
     }
@@ -33,10 +27,8 @@ module.exports = function () {
         controller('NavbarController', [
             '$scope',
             '$interval',
-            '$cookieStore',
-            '$http',
             '$rootScope',
-            '$location',
             'Stationspinner',
+            'AccountService',
             NavbarController]);
 };

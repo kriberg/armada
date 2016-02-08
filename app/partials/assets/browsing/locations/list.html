@@ -2,19 +2,19 @@
     <div class="spinner spinner-lg"></div>
     <h2>loading locations...</h2>
 </div>
-<div class="row" ng-if="!loadingAssetlocations">
-    <div ng-repeat-start="region in regions|orderBy:assetOrdering:orderDirection" class="col-md-3">
+<div class="row" ng-if="!loadingAssetlocations && filteredLocations.length == 0">
+    <div ng-repeat-start="region in regions|filter:searchText|orderBy:AssetToolbar.assetOrdering:AssetToolbar.orderDirection" class="col-md-3">
         <h2>
-            <a ui-sref="assets.browsing.locations.list({
+            <a ui-sref="assets.browsing.location({
                         locationIDs: region.locationID
                   })">{{region.name}}</a>
             <small>{{region.value|shortify}} ISK, {{region.volume|shortify}} m<sup>3</sup></small>
         </h2>
         <div class="row">
-            <div class="col-md-6" ng-repeat="solarSystem in solarSystems|filter:{region: region.name}|orderBy:assetOrdering:orderDirection">
+            <div class="col-md-6" ng-repeat="solarSystem in solarSystems|filter:{region: region.name}|orderBy:AssetToolbar.assetOrdering:AssetToolbar.orderDirection">
                   <h5>
-                      <a ui-sref="assets.browsing.locations.list({
-                            locationIDs: solarSystem.locationID
+                      <a ui-sref="assets.browsing.location({
+                            locationIDs: solarSystem.locationID,
                       })">{{solarSystem.name}}</a>
                       <br/>
                       <small>{{solarSystem.value|shortify}} ISK, {{solarSystem.volume|shortify}} m<sup>3</sup></small>
@@ -24,6 +24,24 @@
     </div>
     <div ng-repeat-end ng-if="($index+1)%4==0" class="clearfix"></div>
 </div>
-
+<div class="row" ng-if="!loadingAssetlocations && filteredLocations.length > 0">
+    <div class="col-md-3" ng-repeat-start="(region, solarSystems) in filteredLocations|groupBy:'region'">
+        <h2>
+            {{region}}
+        </h2>
+        <div class="row">
+            <div class="col-md-6" ng-repeat="solarSystem in solarSystems|orderBy:AssetToolbar.assetOrdering:AssetToolbar.orderDirection">
+                <h5>
+                    <a ui-sref="assets.browsing.location({
+                            locationIDs: solarSystem.locationID,
+                      })">{{solarSystem.name}}</a>
+                    <br/>
+                    <small>{{solarSystem.value|shortify}} ISK, {{solarSystem.volume|shortify}} m<sup>3</sup></small>
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div ng-repeat-end ng-if="($index+1)%4==0" class="clearfix"></div>
+</div>
 
 

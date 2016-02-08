@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-span4">
+        <img ng-src="{{container.typeID|eveImage32}}" class="rounded" alt=""/>
+    </div>
+    <div class="col-md-span-8">
+        <a
+                ui-sref="assets.browsing.inventory.container({
+                               locationID: locationID,
+                               containerID: container.itemID
+                         })"
+                ng-class="{'active': selectedContainer == $index}"
+                ng-if="!loadingContainers"
+                ng-click="activateContainer($index, container)">
+            {{container.name}}
+        </a><br/>
+        <small>{{container.container_value|shortify}} ISK, {{container.container_volume|shortify}} m<sup>3</sup></small>
+    </div>
+</div>

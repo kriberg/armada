@@ -1,5 +1,6 @@
 <span class="eve-type">
-    <img ng-show="icon" ng-src="{{type.typeID|eveImage32}}" alt="" />
-    <a ng-show="hover" href tooltip-html-unsafe="{{description}}">{{type[displayField]}}</a>
-    <span ng-hide="hover">{{type.typeName}}</span>
+    <img class="rounded" ng-if="iconURL" ng-src="{{iconURL}}" alt="" />
+    <span ng-if="type.quantity && !type.singleton">{{type.quantity}}x </span>
+    <a ng-if="hover" href tooltip-html-unsafe="{{description}}">{{type[displayField]}}</a>
+    <span ng-if="!hover" class="text-primary">{{type.typeName}}</span>
 </span>

@@ -6,6 +6,7 @@
   "license": "AGPL3",
   "private": true,
   "dependencies": {
-    "jquery-number": "2.x"
+    "jquery-number": "2.x",
+    "angular-patternfly": "2.x"
   }
 }

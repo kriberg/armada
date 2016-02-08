@@ -1,23 +1,34 @@
 module.exports = function () {
     'use strict';
 
-    function AssetInventoryController($stateParams, $scope, $interval, $timeout, Stationspinner, ArmadaSettings, Colorize) {
-        $scope.children = {};
-        $scope.loadingContainers = true;
-        $scope.loadingAssets = true;
-        $scope.hangarItems = [];
-        $scope.topLevelContainers = [];
-        $scope.selectedContainer = -1;
+    function AssetsInventoryController($stateParams, $scope, $interval, $timeout, Stationspinner, ArmadaSettings,
+                                      CharacterSelector, AssetToolbar) {
+        $scope.containers = {};
+        $scope.loadingContainers = false;
+        $scope.loadingAssets = false;
+        $scope.itemHangarItems = [];
+        $scope.itemHangarContainers = [];
+        $scope.itemHangarValue = 0.0;
+        $scope.itemHangarVolume = 0.0;
+        $scope.shipHangarHulls = [];
+        $scope.shipHangarContainers = [];
+        $scope.shipHangarValue = 0.0;
+        $scope.shipHangarVolume = 0.0;
+        $scope.selectedContainer = 0;
         $scope.currentContainer = [];
         $scope.chunkSize = 20;
-        $scope.inventoryDisplay = 'icons';
+        AssetToolbar.inventoryDisplay = 'icons';
         $scope.nameMap = {};
+        $scope.AssetToolbar = AssetToolbar;
+        AssetToolbar.placeholderText = 'Item type';
 
 
         $scope.loadTopLevelAssets = function() {
+            console.log('loadTopLevelAssets');
+            if($scope.loadingContainers || !CharacterSelector.charactersHasLoaded) return;
             $scope.loadingContainers = true;
             var query_params = {
-                characterIDs: $scope.$parent.characterSelection.join(','),
+                characterIDs: CharacterSelector.join_characterIDs(),
                 locationID: $stateParams.locationID
             };
             Stationspinner.AssetLocations.query(query_params).$promise.then(function (location) {
@@ -25,131 +36,155 @@ module.exports = function () {
                     $scope.location = location[0];
             });
             return Stationspinner.Assets.query(query_params).$promise.then(function (assets) {
-                $scope.topLevelContainers.length = 0;
-                $scope.hangarItems.length = 0;
+                $scope.itemHangarContainers.length = 0;
+                $scope.itemHangarItems.length = 0;
+                $scope.shipHangarHulls.length = 0;
+                $scope.shipHangarContainers.length = 0;
                 angular.forEach(assets, function(asset) {
                     if(asset.container_volume > 0.0) {
-                        $scope.topLevelContainers.push(asset);
+                        //container groupIDs
+                        if(angular.element.inArray(asset.groupID, [12,340,448,649]) >= 0) {
+                            $scope.itemHangarContainers.push(asset);
+                            $scope.itemHangarValue += asset.container_value + asset.value;
+                            $scope.itemHangarVolume += asset.container_volume + asset.volume;
+                        } else
+                        //ships
+                        if(asset.categoryID == 6) {
+                            $scope.shipHangarContainers.push(asset);
+                            $scope.shipHangarValue += asset.container_value + asset.value;
+                            $scope.shipHangarVolume += asset.container_volume + asset.volume;
+                        } else {
+                            $scope.itemHangarItems.push(asset);
+                            $scope.itemHangarValue += asset.container_value + asset.value;
+                            $scope.itemHangarVolume += asset.container_volume + asset.volume;
+                        }
                     } else {
-                        $scope.hangarItems.push(asset);
+                        if(asset.categoryID == 6) {
+                            if(asset.singleton) {
+                                $scope.shipHangarContainers.push(asset);
+                                $scope.shipHangarValue += asset.container_value + asset.value;
+                                $scope.shipHangarVolume += asset.container_volume + asset.volume;
+                            } else {
+                                $scope.shipHangarHulls.push(asset);
+                                $scope.shipHangarValue += asset.container_value + asset.value;
+                                $scope.shipHangarVolume += asset.container_volume + asset.volume;
+                            }
+                        } else {
+                            $scope.itemHangarItems.push(asset);
+                            $scope.itemHangarValue += asset.container_value + asset.value;
+                            $scope.itemHangarVolume += asset.container_volume + asset.volume;
+                        }
                     }
                 });
-                if($stateParams.containerID) {
-                    $scope.loadSubAssets($stateParams.containerID, true);
+                if($stateParams.containerID > 1) {
+                    $scope.loadContainerAssets($stateParams.containerID, true);
+                } else {
+                    $scope.activateContainer($stateParams.containerID, $stateParams.containerID);
                 }
                 $scope.loadingContainers = false;
             });
         };
 
-        $scope.loadSubAssets = function(itemID, activate) {
-            if(activate)
-                $scope.loadingAssets = true;
+        $scope.loadContainerAssets = function(itemID, activate) {
+            console.log('loadContainerAssets', itemID, activate);
+            Stationspinner.Assets.get({
+                characterIDs: CharacterSelector.join_characterIDs(),
+                itemID: itemID
+            }, function (itemData) {
+                console.log('Fetched asset', itemID, itemData);
+                $scope.activeItem = itemData;
+            }, function (response) {
+                console.log('Error fetching asset', itemID, response.status);
+            });
+
+            //$scope.loadingAssets = activate;
             var query_params = {
-                characterIDs: $scope.$parent.characterSelection.join(','),
+                characterIDs: CharacterSelector.join_characterIDs(),
                 locationID: $stateParams.locationID,
                 parentID: itemID
             };
-            Stationspinner.Assets.query(query_params).$promise.then(function (assets) {
-                $scope.children[itemID] = assets;
-                if (activate) {
-                    $scope.currentContainer = $scope.children[itemID];
-                    $scope.chunckSize = Math.ceil($scope.currentContainer.length/4);
-                    $scope.loadingAssets = false;
+            Stationspinner.Assets.query(query_params,
+                function (assets) {
+                    console.log('Loaded assets for itemID', itemID, assets);
+                    $scope.containers[itemID] = assets;
+                    if (activate) {
+                        $scope.currentContainer = $scope.containers[itemID];
+                        //$scope.loadingAssets = false;
+                    }
+                },
+                function (response) {
+                    console.log('Error fetching assets for itemID', itemID, response.status);
                 }
-            });
-
+            );
         };
 
         $scope.activateContainer = function (index, container) {
+            console.log('Activate container', index, container);
             $scope.loadingAssets = true;
-            $scope.selectedContainer = index;
-            if (container == -1) {
-                $scope.currentContainer = $scope.hangarItems;
+            if (container == 0) {
+                console.log('Activating itemHangar', $scope.itemHangarItems);
+                $scope.selectedContainer = 0;
+                $scope.currentContainer = $scope.itemHangarItems;
+                $scope.loadingAssets = false;
+            } else if (container == 1) {
+                console.log('Activating shipHangar', $scope.shipHangarHulls);
+                $scope.selectedContainer = 1;
+                $scope.currentContainer = $scope.shipHangarHulls;
                 $scope.loadingAssets = false;
             } else {
                 var itemID = container.itemID.toString();
-                if($scope.children.hasOwnProperty(itemID)) {
+                console.log('Activating', container.typeName, container.itemID);
+                if($scope.containers.hasOwnProperty(itemID)) {
                     //FIXME: cache invalidation
-                    $scope.currentContainer = $scope.children[itemID];
-                    $scope.chunckSize = Math.ceil($scope.currentContainer.length/4);
+                    $scope.currentContainer = $scope.containers[itemID];
                     $scope.loadingAssets = false;
                 } else {
-                    $scope.loadSubAssets(itemID, true);
+                    $scope.loadContainerAssets(itemID, true);
                 }
             }
         };
 
-
         $scope.settingsDomain = 'AssetInventoryController';
 
-        $scope.saveSetting = function(key, val) {
+        AssetToolbar.saveSetting = function(key, val) {
             ArmadaSettings.put($scope.settingsDomain, key, val);
         };
 
-        $scope.loadSettings = function () {
+        AssetToolbar.loadSettings = function () {
             var inventoryDisplay = ArmadaSettings.get($scope.settingsDomain, 'inventoryDisplay');
-            if(inventoryDisplay !== undefined) $scope.inventoryDisplay = inventoryDisplay;
+
+            if(inventoryDisplay !== undefined)
+                AssetToolbar.inventoryDisplay = inventoryDisplay;
         };
 
-        $scope.getCurrentContainer = function () {
-            if($scope.selectedContainer >= 0) {
-                return $scope.topLevelContainers[$scope.selectedContainer];
-            } else {
-
-            }
-        };
-
-        $scope.colorize = function(identity) {
-            return Colorize.identity(identity);
-        };
-
-        $scope.reverseIdentity = function(identity) {
-            var key = String(identity);
-            if($scope.nameMap.hasOwnProperty(key)) {
-                return $scope.nameMap[key];
-            } else {
-                angular.forEach($scope.$parent.availableCharacters, function(character) {
-                    if(String(character.characterID) == key) {
-                        $scope.nameMap[key] = character.name;
-                        return $scope.nameMap[key];
-                    }
-                });
-            }
-            return identity;
-        };
-
-        $scope.loaderPromise = null;
-        $scope.$watchCollection('$parent.characterSelection', function() {
-            $timeout.cancel($scope.loaderPromise);
-            $scope.loaderPromise = $timeout(function () {
+        $scope.loaderTimer = null;
+        $scope.$watchCollection('CharacterSelector.characterSelection', function() {
+            if(!CharacterSelector.charactersHasLoaded) return;
+            $timeout.cancel($scope.loaderTimer);
+            $scope.loaderTimer = $timeout(function () {
                 $scope.loadTopLevelAssets();
             }, 1000);
         });
 
-
-
         $scope.refresh = function () {
             $scope.loadTopLevelAssets();
-            $scope.loadSubAssets();
+            $scope.loadContainerAssets();
         };
 
-        $scope.loadSettings();
-        $scope.loadTopLevelAssets().then(function () {
-            $scope.activateContainer(-1, -1);
-        });
-
+        AssetToolbar.loadSettings();
         $interval(function(){$scope.refresh();}, 21600000); //reload assets every six hours.
     }
 
     return angular.
-        module('assetInventoryControllers', []).
-        controller('AssetInventoryController', [
+        module('assetsInventoryControllers', []).
+        controller('AssetsInventoryController', [
             '$stateParams',
             '$scope',
             '$interval',
             '$timeout',
             'Stationspinner',
             'ArmadaSettings',
-            'Colorize',
-            AssetInventoryController]);
+            'CharacterSelector',
+            'AssetToolbar',
+            AssetsInventoryController]);
 };

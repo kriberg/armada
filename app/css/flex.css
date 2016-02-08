@@ -1,0 +1,50 @@
+.flexbox-parent {
+    min-height: 100vh;
+    display: flex;
+}
+
+.flexbox-column
+{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: center; /* align items in Cross Axis */
+    align-content: center; /* Extra space in Cross Axis */
+}
+
+.flexbox-row
+{
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: center; /* align items in Cross Axis */
+    align-content: center; /* Extra space in Cross Axis */
+
+    background: rgba(255, 255, 255, .1);
+}
+
+.flexbox-item
+{
+    padding: 20px;
+}
+.flexbox-item-grow
+{
+    flex: 1 1 auto; /* same as flex: 1 1 auto; */
+}
+
+.fill-area
+{
+    display: flex;
+    flex-direction: row;
+
+    justify-content: flex-start; /* align items in Main Axis */
+    align-items: center; /* align items in Cross Axis */
+    align-content: center; /* Extra space in Cross Axis */
+
+}

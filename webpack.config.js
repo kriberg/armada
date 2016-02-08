@@ -19,11 +19,19 @@ module.exports = {
     resolve: {
         root: [appModulesPath, nodeModulesPath, bowerComponentsPath],
         alias: {
+            'http-auth-interceptor': nodeModulesPath + '/angular-http-auth-interceptor/angular-http-auth-interceptor.js',
             'jquery': nodeModulesPath + '/jquery/dist/jquery.min.js',
-            'jquery-number': bowerComponentsPath + '/jquery-number/jquery.number.js',
-            'patternfly': nodeModulesPath + '/patternfly/dist/js/patternfly.js',
-            'patternfly-css': nodeModulesPath + '/patternfly/dist/css/patternfly.css',
-            'patternfly-additions-css': nodeModulesPath + '/patternfly/dist/css/patternfly-additions.css'
+            'jquery-number': bowerComponentsPath + '/jquery-number/jquery.number.min.js',
+            'patternfly': nodeModulesPath + '/patternfly/dist/js/patternfly.min.js',
+            'patternfly.css': nodeModulesPath + '/patternfly/dist/css/patternfly.min.css',
+            'patternfly.additions.css': nodeModulesPath + '/patternfly/dist/css/patternfly-additions.min.css',
+            'c3': nodeModulesPath + '/patternfly/components/c3/c3.min.js',
+            'c3.css': nodeModulesPath + '/patternfly/components/c3/c3.min.css',
+            'd3': nodeModulesPath + '/patternfly/components/d3/d3.min.js',
+            'nya-bootstrap-select.css': nodeModulesPath + '/nya-bootstrap-select/dist/css/nya-bs-select.min.css',
+            'nya-bootstrap-select': nodeModulesPath +     '/nya-bootstrap-select/dist/js/nya-bs-select.min.js',
+            'angular-patternfly': bowerComponentsPath + '/angular-patternfly/dist/angular-patternfly.min.js',
+            'angular-patternfly.css': bowerComponentsPath + '/angular-patternfly/dist/styles/angular-patternfly.min.css'
         },
         extensions: [
             '',
@@ -39,7 +47,18 @@ module.exports = {
     contentBase: appPath,
     module: {
         noParse: [
-            nodeModulesPath + '/jquery/dist/jquery.min.js'
+            'jquery',
+            'jquery-number',
+            'patternfly',
+            'patternfly.css',
+            'patternfly.additions.css',
+            'c3',
+            'c3.css',
+            'd3',
+            'nya-bootstrap-select',
+            'nya-bootstrap-select.css',
+            'angular-patternfly',
+            'angular-patternfly.css'
         ],
         loaders: [
             // Exports Angular
@@ -61,7 +80,8 @@ module.exports = {
         }),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: false,
-            mangle: false
+            mangle: false,
+            compress: false
         })
     ]
 };

@@ -1,50 +1,50 @@
 <div class="row">
-    <div class="col-sm-12 col-md-12">
-        <div class="page-header">
-            <h1>Combined asset searching</h1>
-        </div>
-    </div>
     <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-2">
-                <h4>Characters</h4>
-                <armada-id-selector selection="characterSelection"
-                                    values="availableCharacters"
-                                    display="'name'"
-                                    identifier="'characterID'">
-                </armada-id-selector>
-            </div>
-            <div class="col-md-offset-1 col-md-5">
-                <h4>Search</h4>
-                <div class="row">
-                    <form class="search-pf has-button col-md-12">
-                        <div class="form-group has-clear">
-                            <div class="search-pf-input-group">
-                                <label for="searchAssets" class="sr-only">Search</label>
-                                <input id="searchAssets" type="search" class="form-control" placeholder="Where is my stuff..." ng-model="searchText">
-                                <button type="button" class="clear" aria-hidden="true" ng-show="searchText.length > 0" ng-click="searchText=''"><span class="pficon pficon-close"></span></button>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-default" type="submit" ng-click="searchAssets()"><span class="fa fa-search"></span>Search</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-offset-1 col-md-2">
-                <h4>Search hints</h4>
-                <p class="text-muted">
-                    You can search by item names, types, locations,
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12" ng-repeat="asset in assets">
+        <h1 ng-if="nothingFound">Nothing found...</h1>
         <ul class="list list-unstyled">
-            <li ng-repeat="asset in assets">
-                {{asset.item_name}} {{asset.typeName}} {{asset.locationName}}
+            <li ng-repeat="asset in assets" class="row asset-search-row fx-fade-left fx-dur-300" ng-if="!searching">
+                <div class="col-md-offset-1 col-md-1 col-sm-4 col-xs-4">
+                    <img ng-src="{{asset.typeID|eveImage64}}" alt="" class="rounded"/>
+                </div>
+                <div class="col-md-10 col-sm-12 col-xs-12">
+                    <ul class="list list-unstyled">
+                        <li>
+                            <a ui-sref="assets.browsing.inventory({
+                                    locationID: asset.locationID,
+                                    containerID: asset.itemID
+                                })">
+                                <h3 ng-if="asset.item_name.length > 0">
+                                    <span ng-if="!asset.singleton">{{asset.quantity|humanify}}x </span>{{asset.item_name}} ({{asset.typeName}})
+                                </h3>
+
+                                <h3 ng-if="asset.item_name.length == 0">
+                                    <span ng-if="!asset.singleton">{{asset.quantity|humanify}}x </span>{{asset.typeName}}
+                                </h3>
+                            </a>
+                        </li>
+                        <li>
+                            <span ng-style="{'color': CharacterSelector.colorize(asset.owner)}">{{ CharacterSelector.reverseIdentity(asset.owner) }}</span>
+                            <i class="fa fa-angle-double-right"></i>
+                            <a ui-sref="assets.browsing.location({locationIDs: asset.locationID})">{{asset.locationName}}</a>
+                        <span ng-if="asset.parent_list.length == 0">
+                            <i class="fa fa-angle-double-right"></i> <a ui-sref="assets.browsing.inventory({
+                            locationID: asset.locationID,
+                            containerID: asset.category == 6 ? 1 : 0
+                            })">Hangar</a>
+                        </span>
+                        <span ng-repeat="parent in asset.parent_list|reverse">
+                            <i class="fa fa-angle-double-right"></i> <a
+                                ui-sref="assets.browsing.inventory.container({
+                                containerID: parent.itemID,
+                                locationID: asset.locationID
+                                })">
+                            <span ng-if="parent.itemName.length > 0">{{parent.itemName}}</span>
+                            <span ng-if="parent.itemName.length == 0">{{parent.typeName}}</span>
+                        </a>
+                        </span>
+                        </li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>

@@ -1,6 +1,7 @@
 require('./vendor')();
+require('./css/flex.css');
 require('./css/armada.css');
-require('./js/http-auth-interceptor.js');
+require('./css/spinner-xl.css');
 require('expose?FiltersNumbers!./js/filters/numbers.js');
 require('expose?FiltersEveImage!./js/filters/eve-image.js');
 require('./js/armada.js')();
@@ -16,14 +17,25 @@ require('./js/controllers/character/skills.js')();
 require('./js/controllers/character/economy/transactions.js')();
 require('./js/controllers/character/economy/balance.js')();
 require('./js/controllers/character/sheet.js')();
-require('./js/controllers/assets/browsing/list.js')();
+require('./js/controllers/assets/assets.js')();
+require('./js/controllers/assets/summary/summary.js')();
+require('./js/controllers/assets/browsing/view.js')();
+require('./js/controllers/assets/browsing/toolbar.js')();
 require('./js/controllers/assets/browsing/locations/list.js')();
 require('./js/controllers/assets/browsing/locations/details.js')();
 require('./js/controllers/assets/browsing/inventory/list.js')();
+require('./js/controllers/assets/browsing/inventory/toolbar.js')();
 require('./js/controllers/assets/searching/searching.js')();
+require('./js/controllers/assets/searching/toolbar.js')();
 require('./js/services/stationspinner.js')();
 require('./js/services/settings.js')();
+require('./js/services/account.js')();
 require('./js/services/colorize.js')();
+require('./js/services/asset-toolbar.js')();
+require('./js/services/character-selector.js')();
+require('./js/services/eve-icons.js')();
+require('./js/directives/armada-login.js')();
+require('./js/directives/armada-welcome.js')();
 require('./js/directives/character-box.js')();
 require('./js/directives/character-box-extended.js')();
 require('./js/directives/eve-status.js')();
@@ -33,4 +45,11 @@ require('./js/directives/mail-display.js')();
 require('./js/directives/eve-skill.js')();
 require('./js/directives/eve-type.js')();
 require('./js/directives/armada-id-selector.js')();
+require('./js/directives/armada-ship-layout.js')();
+require('./js/directives/armada-inventory-table.js')();
+require('./js/directives/armada-inventory-icons.js')();
+require('./js/directives/armada-chart-asset-distribution.js')();
+require('./js/directives/armada-chart-asset-worth.js')();
+
+
 

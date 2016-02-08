@@ -2,10 +2,10 @@
     <div class="col-md-12">
         <ol class="breadcrumb">
             <li>
-                <a ui-sref="assets.locations({})">Locations</a>
+                <a ui-sref="assets.browsing.locations">Locations</a>
             </li>
             <li ng-if="region" ng-class="{'active': !solarSystem}">
-                <a ui-sref="assets.browsing.locations.list({locationIDs: selectedLocation.regionID})" ng-if="solarSystem">{{selectedLocation.regionName}}</a>
+                <a ui-sref="assets.browsing.location({locationIDs: selectedLocation.regionID})" ng-if="solarSystem">{{selectedLocation.regionName}}</a>
                 <strong ng-if="!solarSystem">{{selectedLocation.regionName}}</strong> <span ng-if="!solarSystem">{{selectedLocation.value|shortify}} ISK, {{selectedLocation.volume|shortify}} m<sup>3</sup></span>
             </li>
             <li ng-if="solarSystem" class="active">
@@ -14,9 +14,12 @@
             </li>
         </ol>
     </div>
-    <div class="col-md-4" ng-repeat="location in locations|orderBy:assetOrdering:orderDirection">
+    <div class="col-md-4" ng-repeat="location in locations|orderBy:AssetToolbar.assetOrdering:AssetToolbar.orderDirection">
         <h4>
-            <a ui-sref="assets.inventory({locationID: location.locationID})">
+            <a ui-sref="assets.browsing.inventory({
+            locationID: location.locationID,
+            containerID: 0
+            })">
                 {{location.name}}
             </a>
             <br/>

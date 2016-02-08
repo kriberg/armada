@@ -1,48 +1,36 @@
-<div class="row">
-    <div class="col-sm-12">
-        <h1>Armada</h1>
-    </div>
-    <div class="col-sm-7 col-md-6 col-lg-5 login">
-        <form class="form-horizontal" role="form" ng-submit="submit()">
-            <div class="form-group">
-                <label for="inputUsername" class="col-sm-2 col-md-2 control-label">Username</label>
-
-                <div class="col-sm-10 col-md-10">
-                    <input type="text" class="form-control" id="inputUsername" placeholder="" tabindex="1"
-                           ng-model="username">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 col-md-2 control-label">Password</label>
-
-                <div class="col-sm-10 col-md-10">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="" tabindex="2"
-                           ng-model="password">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-xs-8 col-sm-offset-2 col-sm-6 col-md-offset-2 col-md-6">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" tabindex="3" ng-model="rememberUsername"> Remember Username
-                        </label>
+<div class="flexbox-parent login-pf">
+    <div class="flexbox-column">
+        <div class="flexbox-item"></div>
+        <div class="flexbox-item flexbox-item-grow">
+            <div class="flexbox-row login">
+                <div class="flexbox-item flexbox-item-grow">
+                    <div class="text-center spacer">
+                        <h2>Welcome to Armada</h2>
                     </div>
-                    <!--span class="help-block"> Forgot <a href="#" tabindex="5">Username</a> or <a href="#"
-                            tabindex="6">Password</a>?</span-->
-                    <div class="text-warning" ng-show="errorMsg">{{ errorMsg }}</div>
-                </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 submit">
-                    <button type="submit" class="btn btn-primary btn-lg pull-right" tabindex="4">Log In</button>
+                    <a ng-click="startPolling()" ng-href="https://login.eveonline.com/oauth/authorize/?response_type=code&redirect_uri={{callbackURL}}&client_id={{clientID}}&state={{authToken}}&scope={{scopes}}" target="_blank">
+                        <img src="img/eve_sso_button.png" alt="Log in with EVE SSO" />
+                    </a>
+                    <div class="text-center spacer" ng-if="waitingForSSO">
+                        <div class="spinner-xl"></div>
+                    </div>
+                    <div class="cookie-box text-center" ng-if="!userDoesntHateCookies">
+                        <p class="">
+                            <strong>This site uses cookies.</strong> Yeah, cookies. We use them. They help keep you logged
+                            in and store some state about which characters should be selected etc. By using this site, you
+                            accept cookies storing some information to "enhance your browsing experience".
+                        </p>
+                        <div class="text-right">
+                            <button type="button" class="btn btn-success" ng-click="iLikeCookies()">Got it</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="flexbox-item legal-notice">
+            <i class="fa fa-copyright"></i> 2009-2016 by Vittoros, Kristian Berg | All <a ui-sref="legal">Eve
+            Related Materials</a> are Property of <a href="https://ccpgames.com/">CCP Games</a> |
+            <a ui-sref="legal">Legal Notice</a>
+        </div>
     </div>
-    <div class="col-sm-5 col-md-6 col-lg-7 details">
-        <p>
-            <strong>Welcome to Armada!</strong>
 
-        </p>
-        <a href="#/tour" class="btn btn-success btn-lg">Take the tour</a>
-        <a href="/api/registration/register/" class="btn btn-success btn-lg">Create an account</a>
-    </div>
 </div>

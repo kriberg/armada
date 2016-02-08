@@ -1,7 +1,10 @@
 module.exports = function () {
-    require('patternfly-css');
-    require('patternfly-additions-css');
-    require('nya-bootstrap-select/dist/css/nya-bs-select.css');
+    require('patternfly.css');
+    require('patternfly.additions.css');
+    require('d3');
+    require('c3');
+    require('c3.css');
+    require('nya-bootstrap-select.css');
     require('jquery');
     require('jquery-number');
     require('patternfly');
@@ -11,8 +14,13 @@ module.exports = function () {
     require('angular-sanitize');
     require('angular-resource');
     require('angular-cookies');
-    require('angular-bootstrap');
+    require('angular-ui-bootstrap');
     require('angular-utils-pagination');
     require('angular-filter');
+    require('angular-animate');
+    require('angular-http-auth');
+    require('ng-fx');
     require('nya-bootstrap-select');
+    require('angular-patternfly');
+    require('angular-patternfly.css');
 };

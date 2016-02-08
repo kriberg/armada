@@ -1,47 +1,5 @@
 <div class="row">
-    <div class="col-sm-12 col-md-12">
-        <div class="page-header">
-            <h1>Combined asset browsing</h1>
-        </div>
-    </div>
     <div class="col-md-12">
-        <div class="row">
-            <div class="col-md-2">
-                <h4>Characters</h4>
-                <armada-id-selector selection="characterSelection"
-                                    values="availableCharacters"
-                                    display="'name'"
-                                    identifier="'characterID'">
-                </armada-id-selector>
-            </div>
-            <div class="col-md-offset-1 col-md-3">
-                <h4>Filter</h4>
-                <div class="row">
-                    <form class="search-pf has-button col-md-12">
-                        <div class="search-pf-input-group">
-                            <label for="searchAssets" class="sr-only">Search</label>
-                            <input id="searchAssets" type="search" class="form-control" placeholder="Search" ng-model="searchText">
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-offset-1 col-md-2">
-                <h4>Order</h4>
-                <div class="btn-group" aria-label="...">
-                    <label class="btn btn-sm btn-default" ng-model="assetOrdering" btn-radio="'name'" uncheckable>Name</label>
-                    <label class="btn btn-sm btn-default" ng-model="assetOrdering" btn-radio="'value'" uncheckable>Value</label>
-                    <label class="btn btn-sm btn-default" ng-model="assetOrdering" btn-radio="'volume'" uncheckable>Volume</label>
-                </div>
-            </div>
-            <div class="col-md-offset-1 col-md-2">
-                <h4>Sort</h4>
-                <div class="btn-group" aria-label="...">
-                    <label class="btn btn-sm btn-default" ng-model="orderDirection" btn-radio="false" uncheckable>Ascending</label>
-                    <label class="btn btn-sm btn-default" ng-model="orderDirection" btn-radio="true" uncheckable>Descending</label>
-                </div>
-            </div>
-        </div>
-        <hr />
         <div ui-view="assets_browsing" class="small-spacing-top"></div>
     </div>
 </div>

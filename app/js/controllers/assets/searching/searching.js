@@ -1,72 +1,104 @@
 module.exports = function () {
     'use strict';
 
-    function AssetsSearchingController($scope, $interval, $timeout, $cookies, Stationspinner, Colorize) {
-        $scope.characterSelection = [];
-        $scope.availableCharacters = [];
+    function AssetsSearchingController($scope, $state, $stateParams, $timeout, $rootScope, Stationspinner, CharacterSelector, AssetToolbar) {
+        $scope.assets = [];
+        $scope.CharacterSelector = CharacterSelector;
+        $scope.searching = false;
+        AssetToolbar.placeholderText = 'Where did I put...';
+        $scope.nothingFound = false;
 
-        $scope.searchAssets = function () {
-            Stationspinner.Assets.search({
-                query: $scope.searchText,
-                characterIDs: $scope.characterSelection.join(',')
-            }).$promise.then(function (assets) {
-                console.log(assets);
-                $scope.assets = assets;
-            });
+        $scope.search = function (query, searchActive) {
+            $state.go('assets.searching.query', {query: query});
+            $scope.searchAssets(query, searchActive);
         };
 
-        $scope.loadCharacters = function (skipCookieLoading) {
-            Stationspinner.CharacterSheet.query({short: true}).$promise.then(function (availableCharacters) {
-                $scope.availableCharacters = availableCharacters;
-                angular.forEach(availableCharacters, function (character) {
-                    character['type'] = 'character';
-                    character['color'] = Colorize.identity(character['characterID']);
+        $scope.clear = function () {
+            $scope.searching = true;
+            $scope.assets.length = 0;
+            AssetToolbar.searchText = '';
+            $state.go('assets.searching');
+            $scope.nothingFound = false;
+        };
+
+        var searchTimer = null;
+        $scope.searchAssets = function (query, searchActive) {
+
+            if(searchTimer) {
+                $timeout.cancel(searchTimer);
+            } else {
+                $scope.searching = true;
+                $scope.assets.length = 0;
+            }
+
+            searchTimer = $timeout(function () {
+                Stationspinner.Assets.search({
+                    query: query,
+                    characterIDs: CharacterSelector.join_characterIDs()
+                }, function (assets) {
+                    searchActive = false;
+                    angular.copy(assets, $scope.assets);
+                    $timeout(function () {
+                        $scope.searching = false;
+                        if($scope.assets.length > 0) {
+                            $scope.nothingFound = false;
+                        } else {
+                            $scope.nothingFound = true;
+                        }
+                    }, 400);
+                    searchTimer = null;
+                }, function (response) {
+                    searchActive = false;
+                    $scope.searching = false;
+                    console.log('Error while searching', response);
                 });
-                // After we've loaded the characterIDs, let's see if the user has selected characters
-                // previously. If not, just select all.
-                if (!skipCookieLoading) {
-                    var cookieSelection = $cookies.getObject('AssetsController_characterSelection');
-                    if (cookieSelection instanceof Array) {
-                        angular.forEach(cookieSelection, function (characterID) {
-                            if (angular.element.inArray(characterID, $scope.availableCharacters)) {
-                                $scope.characterSelection.push(characterID);
-                            }
-                        });
-                    } else {
-                        $scope.characterSelection.length = 0;
-                        angular.forEach($scope.availableCharacters, function (character) {
-                            $scope.characterSelection.push(character.characterID);
-                        });
-                    }
-                }
-            });
+            }, 100);
         };
 
-        $scope.loadCharacters(false);
+        if ($stateParams.query !== undefined && $stateParams.query !== '') {
+            var loader = function () {
+                if (CharacterSelector.charactersHasLoaded) {
+                    AssetToolbar.searchText = $stateParams.query;
+                    AssetToolbar.searchActive = true;
+                    $scope.searchAssets($stateParams.query, AssetToolbar.searchActive);
+                } else {
+                    $timeout(loader, 300);
+                }
+            };
+            $timeout(loader, 300);
+        }
 
-        $scope.loaderPromise = null;
-        $scope.$watchCollection('characterSelection', function () {
-            $timeout.cancel($scope.loaderPromise);
-            $scope.loaderPromise = $timeout(function () {
-                $cookies.putObject(
-                    'AssetsController_characterSelection',
-                    $scope.characterSelection
-                );
-            }, 1000);
+        AssetToolbar.setSearchCallback($scope.search);
+        AssetToolbar.setClearCallback($scope.clear);
+
+
+        $scope.$watchCollection('CharacterSelector.characterSelection', function () {
+            if(CharacterSelector.characterSelection.length > 0 && CharacterSelector.charactersHasLoaded) {
+                if ($stateParams.query !== undefined && $stateParams.query !== '') {
+                    AssetToolbar.searchActive = true;
+                    $scope.searchAssets(AssetToolbar.searchText, AssetToolbar.searchActive);
+                }
+            }
         });
-        $interval(function () {
-            $scope.loadCharacters(true);
-        }, 7200000); //reload characterIDs every two hours.
+
+        $rootScope.$on('loggedIn', function () {
+            $scope.searchAssets($stateParams.query, AssetToolbar.searchActive);
+        });
+
+
     }
 
     return angular
         .module('assetsSearchingControllers', [])
         .controller('AssetsSearchingController', [
             '$scope',
-            '$interval',
+            '$state',
+            '$stateParams',
             '$timeout',
-            '$cookies',
+            '$rootScope',
             'Stationspinner',
-            'Colorize',
+            'CharacterSelector',
+            'AssetToolbar',
             AssetsSearchingController]);
-};
+}
+;

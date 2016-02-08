@@ -5,8 +5,7 @@ module.exports = function () {
         var service = {};
 
         /* accounting services */
-
-        service.Capsuler = $resource('/api/accounting/capsuler/');
+        service.Capsuler = $resource('/api/accounting/capsuler/:username/', {username: '@username'});
         service.APIKey = $resource('/api/accounting/apikeys/:id/', {id: '@id'}, {
             'revalidate': {method: 'POST', url: '/api/accounting/revalidate-key/', params: {id: '@id'}}
         });
@@ -28,6 +27,11 @@ module.exports = function () {
                 method: 'POST',
                 isArray: true,
                 url: '/api/char/AssetSearch/'
+            },
+            'summary': {
+                method: 'POST',
+                isArray: true,
+                url: '/api/statistics/CharacterAssetSummary/'
             }
         });
 
@@ -40,13 +44,17 @@ module.exports = function () {
         service.Mail = $resource('/api/evemail/Mail/:messageID/', {messageID: '@messageID'});
         service.SearchLanguages = $resource('/api/evemail/Languages/');
 
-        /* economist services */
-
-        service.CharacterWallet = $resource('/api/economist/CharacterWallet/');
-
         /* sde services */
 
         service.InvType = $resource('/api/sde/InvType/:typeID/', {typeID: '@typeID'});
+
+        /* statistics */
+        service.CharacterAssetWorth = $resource('/api/statistics/CharacterAssetWorth/', {}, {
+            'summary': {
+                method: 'POST',
+                isArray: true
+            }
+        });
 
         return service;
     }

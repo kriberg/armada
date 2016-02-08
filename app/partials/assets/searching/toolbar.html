@@ -1,0 +1,30 @@
+<div class="col-md-offset-1 col-md-5">
+    <h4>Search</h4>
+
+    <div class="row">
+        <form class="search-pf has-button col-md-12">
+            <div class="form-group has-clear">
+                <div class="search-pf-input-group">
+                    <label for="searchAssets" class="sr-only">Search</label>
+                    <input id="searchAssets" type="search" class="form-control"
+                           placeholder="{{AssetToolbar.placeholderText}}" ng-model="AssetToolbar.searchText">
+                    <span ng-show="searchActive" class="clear text-right spinner spinner-xs spinner-inline"></span>
+                    <button type="button" class="clear" aria-hidden="true" ng-show="AssetToolbar.searchText.length > 0"
+                            ng-click="AssetToolbar.clear()"><span class="pficon pficon-close"></span></button>
+                </div>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-default" type="submit" ng-click="AssetToolbar.search()"><span
+                        class="fa fa-search"></span>Search
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="col-md-offset-1 col-md-2">
+    <h4>Search hints</h4>
+
+    <p class="text-muted">
+        Assets are indexed by item types, item names, categories and fittings.
+    </p>
+</div>
