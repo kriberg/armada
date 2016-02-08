@@ -43,6 +43,7 @@ module.exports = {
     resolveLoader: {
         root: nodeModulesPath
     },
+    devTool: 'source-map',
 
     contentBase: appPath,
     module: {
@@ -64,7 +65,7 @@ module.exports = {
             // Exports Angular
             { test: /[\/]angular\.js$/, loader: "exports?angular" },
             // Markup Loaders
-            { test: /\.css$/, loader: 'style-loader!css-loader' },
+            { test: /\.css$/, loader: 'style-loader!css-loader?sourceMap' },
             { test: /\.(png|jpg|gif)$/, loader: 'url-loader?limit=8192' }, // inline base64 URLs for <=8k images, direct URLs for the rest
             { test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,   loader: "url?limit=10000&minetype=application/font-woff" },
             { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,    loader: "url?limit=10000&minetype=application/octet-stream" },
@@ -79,9 +80,12 @@ module.exports = {
             "window.jQuery": "jquery"
         }),
         new webpack.optimize.UglifyJsPlugin({
-            sourceMap: false,
             mangle: false,
-            compress: false
+            compress: true,
+            sourceMap: true
+        }),
+        new webpack.DefinePlugin({
+            ON_TEST: process.env.NODE_ENV === "test"
         })
     ]
 };
