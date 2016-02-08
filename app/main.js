@@ -35,7 +35,6 @@ require('./js/services/asset-toolbar.js')();
 require('./js/services/character-selector.js')();
 require('./js/services/eve-icons.js')();
 require('./js/directives/armada-login.js')();
-require('./js/directives/armada-welcome.js')();
 require('./js/directives/character-box.js')();
 require('./js/directives/character-box-extended.js')();
 require('./js/directives/eve-status.js')();
