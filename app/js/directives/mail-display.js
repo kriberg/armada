@@ -4,7 +4,7 @@ module.exports = function () {
     function MailDisplay () {
         return {
             restrict: 'E',
-            templateUrl: 'js/directives/mail-display.html',
+            templateUrl: 'partials/directives/mail-display.html',
             scope: {
                 mail: '=mail'
             }

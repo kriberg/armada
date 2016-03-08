@@ -307,7 +307,7 @@ module.exports = function () {
             $resourceProvider.defaults.stripTrailingSlashes = false;
         })
         .config(function (paginationTemplateProvider) {
-            paginationTemplateProvider.setPath('js/directives/dirPagination-numberbar.tpl.html');
+            paginationTemplateProvider.setPath('partials/directives/dirPagination-numberbar.tpl.html');
         })
         .filter('shortify', [FiltersNumbers.Shortify])
         .filter('humanify', [FiltersNumbers.Humanify])

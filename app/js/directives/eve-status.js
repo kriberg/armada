@@ -4,7 +4,7 @@ module.exports = function () {
     function EveStatus () {
         return {
             restrict: 'EA',
-            templateUrl: 'js/directives/eve-status.html'
+            templateUrl: 'partials/directives/eve-status.html'
         };
     }
 

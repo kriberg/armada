@@ -11,7 +11,7 @@ module.exports = function () {
                 identifier: '=identifier',
                 colorize: '=colorize'
             },
-            templateUrl: 'js/directives/armada-id-selector.html'
+            templateUrl: 'partials/directives/armada-id-selector.html'
         };
     }
 

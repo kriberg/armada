@@ -7,7 +7,7 @@ module.exports = function () {
             scope: {
                 skill: '=skill'
             },
-            templateUrl: 'js/directives/eve-skill.html'
+            templateUrl: 'partials/directives/eve-skill.html'
         };
     }
 

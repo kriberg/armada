@@ -3,7 +3,7 @@ module.exports = function () {
 
     function LoginController($scope, $cookies, $http, $rootScope, $interval, authService, AccountService) {
         $scope.waitingForSSO = false;
-        $scope.scopes = '';
+        $scope.scopes = 'publicData';
 
         var authTimer = null;
         var spamCounter = 0;
@@ -14,7 +14,6 @@ module.exports = function () {
                     $scope.clientID = config.clientID;
                     $scope.callbackURL = config.callbackURL;
                     $scope.authToken = config.authToken;
-                    $scope.scopes = config.scopes;
                 })
                 .error(function (resp, status) {
                     console.log('Error fetching login config', resp, status);

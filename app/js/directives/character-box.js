@@ -7,7 +7,7 @@ module.exports = function () {
             scope: {
                 character: '=character'
             },
-            templateUrl: 'js/directives/character-box.html'
+            templateUrl: 'partials/directives/character-box.html'
         };
     }
 

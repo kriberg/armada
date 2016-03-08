@@ -8,7 +8,7 @@ module.exports = function () {
                 character: '=character',
                 skill: '=skill'
             },
-            templateUrl: 'js/directives/character-box-extended.html'
+            templateUrl: 'partials/directives/character-box-extended.html'
         };
     }
 

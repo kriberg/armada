@@ -8,7 +8,7 @@ module.exports = function () {
                 container: '=container',
                 locationID: '=locationID'
             },
-            templateUrl: 'js/directives/armada-inventory-container.html'
+            templateUrl: 'partials/directives/armada-inventory-container.html'
         };
     }
 

@@ -13,7 +13,7 @@ module.exports = function () {
                 ordering: '=ordering',
                 direction: '=direction'
             },
-            templateUrl: 'js/directives/armada-inventory-icons.html',
+            templateUrl: 'partials/directives/armada-inventory-icons.html',
             controller: ArmadaInventoryIconsController
         };
     }

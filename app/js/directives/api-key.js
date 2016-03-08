@@ -7,7 +7,7 @@ module.exports = function () {
             scope: {
                 key: '=key'
             },
-            templateUrl: 'js/directives/api-key.html',
+            templateUrl: 'partials/directives/api-key.html',
             replace: true
         };
     }

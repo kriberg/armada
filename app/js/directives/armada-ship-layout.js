@@ -131,7 +131,7 @@ module.exports = function () {
                 showCargo: '=?showCargo',
                 showDrones: '=?showDrones'
             },
-            templateUrl: 'js/directives/armada-ship-layout.html',
+            templateUrl: 'partials/directives/armada-ship-layout.html',
             controller: ArmadaShipLayoutController
         };
     }

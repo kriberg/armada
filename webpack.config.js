@@ -2,19 +2,38 @@
 require('es6-promise').polyfill();
 var webpack = require('webpack');
 var path = require('path');
+var fs = require('fs');
+var buildPath = path.join(__dirname, 'build');
 
 var appPath = path.join(__dirname, 'app');
 var appModulesPath = path.join(appPath, 'js');
 var nodeModulesPath = path.join(__dirname, 'node_modules');
 var bowerComponentsPath = path.join(__dirname, 'app', 'bower_components');
 
+var outputFilename = 'armada.js';
+var outputPath = appPath;
+if (process.env.NODE_ENV == 'production') {
+    outputFilename = 'armada.[hash].js';
+    outputPath = buildPath;
+}
+
 module.exports = {
     context: appPath,
 
-    entry: './main.js',
+    entry: [
+        './main.js'
+    ],
     output: {
-        path: appPath,
-        filename: 'armada.js'
+        path: outputPath,
+        filename: outputFilename
+    },
+    devServer: {
+        proxy: {
+            '/api/*': {
+                target: 'http://localhost:8000/',
+                secure: false
+            }
+        }
     },
     resolve: {
         root: [appModulesPath, nodeModulesPath, bowerComponentsPath],
@@ -81,11 +100,35 @@ module.exports = {
         }),
         new webpack.optimize.UglifyJsPlugin({
             mangle: false,
-            compress: true,
-            sourceMap: true
+            compress: true
         }),
+        new webpack.optimize.OccurenceOrderPlugin(true),
         new webpack.DefinePlugin({
             ON_TEST: process.env.NODE_ENV === "test"
-        })
+        }),
+        function() {
+            this.plugin("done", function(stats) {
+                if (process.env.NODE_ENV === 'production') {
+                    var replaceInFile = function (input, output, toReplace, replacement) {
+                        var replacer = function (match) {
+                            console.log('Replacing in %s: %s => %s', input, match, replacement);
+                            return replacement
+                        };
+                        var str = fs.readFileSync(input, 'utf8');
+                        var out = str.replace(new RegExp(toReplace, 'g'), replacer);
+                        fs.writeFileSync(output, out);
+                    };
+
+                    var hash = stats.hash; // Build's hash, found in `stats` since build lifecycle is done.
+
+                    replaceInFile(
+                        path.join(appPath,  'index.html'),
+                        path.join(buildPath, 'index.html'),
+                        'armada.js',
+                        'armada.' + hash + '.js'
+                    );
+                }
+            });
+        }
     ]
 };

@@ -51,7 +51,7 @@ module.exports = function () {
             scope: {
                 characterIds: '=characterIds'
             },
-            templateUrl: 'js/directives/armada-chart-asset-distribution.html',
+            templateUrl: 'partials/directives/armada-chart-asset-distribution.html',
             controller: ArmadaChartAssetDistributionController,
             link: function (scope, element, attrs) {
                 scope.container = element.children()[0];

@@ -34,7 +34,7 @@ module.exports = function () {
                 iconSize: '=iconSize',
                 displayField: '=displayField'
             },
-            templateUrl: 'js/directives/eve-type.html',
+            templateUrl: 'partials/directives/eve-type.html',
             controller: EveTypeController
         };
     }
