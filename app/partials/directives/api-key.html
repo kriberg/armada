@@ -45,7 +45,7 @@
             <div class="col-md-8">
                 <ul class="list list-inline">
                     <li ng-repeat="character in key.associated_characters">
-                        <img ng-src="http://image.eveonline.com/Character/{{character.characterID}}_32.jpg"
+                        <img ng-src="https://imageserver.eveonline.com/Character/{{character.characterID}}_32.jpg"
                              alt="{{character.name}} portrait" class="rounded">
                         {{character.name}}
                     </li>
@@ -55,10 +55,10 @@
         </div>
         <div class="form-group" ng-show="key.type == 'Corporation'">
             <label class="col-md-4 control-label">Associated corporation</label>
-            <div class="col-md-8">
+            <div class="col-md-8">s
                 <ul class="list list-inline">
                     <li ng-repeat="corporation in key.associated_corporations">
-                        <img ng-src="http://image.eveonline.com/Corporation/{{corporation.corporationID}}_32.png"
+                        <img ng-src="https://imageserver.eveonline.com/Corporation/{{corporation.corporationID}}_32.png"
                              alt="{{corporation.corporationName}} logo" class="rounded">
                         {{corporation.corporationName}}
                     </li>
