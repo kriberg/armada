@@ -270,7 +270,6 @@ module.exports = function () {
             'angularUtils.directives.dirPagination',
             'nya.bootstrap.select',
             'patternfly',
-            'patternfly.charts',
             'armadaSettingsServices',
             'stationspinnerServices',
             'assetToolbarServices',

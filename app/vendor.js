@@ -1,6 +1,8 @@
 module.exports = function () {
     require('patternfly.css');
     require('patternfly.additions.css');
+    require('font-awesome.css');
+    require('font-awesome.fonts');
     require('d3');
     require('c3');
     require('c3.css');
@@ -22,5 +24,4 @@ module.exports = function () {
     require('ng-fx');
     require('nya-bootstrap-select');
     require('angular-patternfly');
-    require('angular-patternfly.css');
 };
