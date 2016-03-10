@@ -33,7 +33,7 @@
                 <span class="badge">{{note.sentDate|date:'MMM dd, HH:mm'}}</span>
                 <h4 class="list-group-item-heading">{{note.senderName}} <i class="fa fa-angle-double-right"></i> {{note.owner.name}}</h4>
                 <p class="list-group-item-text">
-                    <img class="notification-icon" ng-src="img/notifications/notificationIcon_{{note.typeID}}.png" alt=""/>
+                    <img class="notification-icon" ng-src="{{ getNotificationIcon(note) }}" alt=""/>
                     {{note.parsed_message}}
                 </p>
             </li>

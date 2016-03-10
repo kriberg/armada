@@ -30,7 +30,22 @@ module.exports = function () {
                 //sidebar();
             });
         };
+
+        $scope.getNotificationIcon = function (note) {
+            if(note.typeID == 147) {
+                //corp logo
+                return 'https://imageserver.eveonline.com/Corporation/' + note.owner.corporationID + '_64.png';
+            } else if(note.typeID == 160) {
+                //alliance logo
+                return 'https://imageserver.eveonline.com/Alliance/' + note.owner.allianceID + '_64.png';
+            } else {
+                return 'img/notifications/notificationIcon_' + note.typeID + '.png';
+            }
+
+        };
+
         $scope.getNotificationsPage($scope.notificationsPagination.currentPage);
+
 
         //sidebar();
 
