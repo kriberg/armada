@@ -1,10 +1,12 @@
 module.exports = function () {
     'use strict';
 
-    function AccountService($http, $cookies, $rootScope, $interval, Stationspinner) {
+    function AccountService($http, $cookies, $rootScope, $interval, $q, Stationspinner) {
         var service = {};
         service.refreshTimer = null;
         service.tokenExpires = null;
+        service._tokenRetrievalActive = false;
+        service._tokenRetrievalPromise = null;
 
         service.logout = function () {
             $http.post('/api/accounting/logout/');
@@ -14,18 +16,32 @@ module.exports = function () {
             $rootScope.$broadcast('event:auth-loginRequired');
         };
 
-        service.getUser = function() {
+        service.getUser = function () {
             return Stationspinner.Capsuler.get({username: $rootScope.username});
         };
 
         service.obtainAuthToken = function () {
-            return $http.get('/api/accounting/obtaintoken/', {
+            if (service._tokenRetrievalActive && service._tokenRetrievalPromise) {
+                return service._tokenRetrievalPromise.promise;
+            }
+            service._tokenRetrievalActive = true;
+            service._tokenRetrievalPromise = $q.defer();
+
+            $http.get('/api/accounting/obtaintoken/', {
                 ignoreAuthModule: true
+            }).then(function (config) {
+                service._tokenRetrievalActive = false;
+                service._tokenRetrievalPromise.resolve(config);
+            }, function (error) {
+                service._tokenRetrievalActive = false;
+                service._tokenRetrievalPromise.reject(error);
             });
+
+            return service._tokenRetrievalPromise.promise;
         };
 
         service.checkAuthToken = function (authToken) {
-            return $http.get('/api/accounting/checktoken/?authToken='+authToken, {
+            return $http.get('/api/accounting/checktoken/?authToken=' + authToken, {
                 ignoreAuthModule: true
             });
         };
@@ -35,8 +51,8 @@ module.exports = function () {
         };
 
         service.keepLoggedIn = function () {
-            var refreshTime = service.tokenExpires - (3*60*1000);
-            if(refreshTime < Date.now()) {
+            var refreshTime = service.tokenExpires - (3 * 60 * 1000);
+            if (refreshTime < Date.now()) {
                 service.refreshAuthToken()
                     .success(function (response) {
                         $http.defaults.headers.common['Authorization'] = 'Token ' + response.token;
@@ -60,13 +76,12 @@ module.exports = function () {
         return service;
     }
 
-    return angular.
-    module('accountServices', []).
-    factory('AccountService', [
+    return angular.module('accountServices', []).factory('AccountService', [
         '$http',
         '$cookies',
         '$rootScope',
         '$interval',
+        '$q',
         'Stationspinner',
         AccountService]);
 };

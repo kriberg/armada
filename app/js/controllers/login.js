@@ -3,37 +3,35 @@ module.exports = function () {
 
     function LoginController($scope, $cookies, $http, $rootScope, $interval, authService, AccountService) {
         $scope.waitingForSSO = false;
-        $scope.scopes = 'publicData';
 
         var authTimer = null;
         var spamCounter = 0;
 
-        $rootScope.$on('event:auth-loginRequired', function() {
-            AccountService.obtainAuthToken()
-                .success(function (config) {
-                    $scope.clientID = config.clientID;
-                    $scope.callbackURL = config.callbackURL;
-                    $scope.authToken = config.authToken;
-                })
-                .error(function (resp, status) {
-                    console.log('Error fetching login config', resp, status);
-                    // this can happen if we have a token in our headers,
-                    // but it is invalid. We clear it, then retry.
-                    $http.post('/api/accounting/logout/');
-                    delete $http.defaults.headers.common['Authorization'];
-                    $cookies.remove('authtoken');
-                    $scope.errorMsg = resp.data;
-                    $interval.cancel(authTimer);
-                });
+        $rootScope.$on('event:auth-loginRequired', function () {
+            AccountService.obtainAuthToken().then(function (resp) {
+                $scope.clientID = resp.data.clientID;
+                $scope.callbackURL = resp.data.callbackURL;
+                $scope.authToken = resp.data.authToken;
+                $scope.scopes = resp.data.scopes;
+            }, function (resp, status) {
+                console.log('Error fetching login config', resp, status);
+                // this can happen if we have a token in our headers,
+                // but it is invalid. We clear it, then retry.
+                $http.post('/api/accounting/logout/');
+                delete $http.defaults.headers.common['Authorization'];
+                $cookies.remove('authtoken');
+                $scope.errorMsg = resp.data;
+                $interval.cancel(authTimer);
+            });
         });
         $scope.userDoesntHateCookies = $cookies.get('userDoesntHateCookies', false);
         $scope.iLikeCookies = function () {
             $scope.userDoesntHateCookies = true;
-            $cookies.put('userDoesntHateCookies', true);
+            $cookies.put('userDoesntHateCookies', true, {expires: new Date(2099)});
         };
 
         $scope.startPolling = function () {
-            if(authTimer) $interval.cancel(authTimer);
+            if (authTimer) $interval.cancel(authTimer);
             spamCounter = 0;
             $scope.waitingForSSO = true;
             authTimer = $interval($scope.checkLogin, 3000);
@@ -57,10 +55,10 @@ module.exports = function () {
         $scope.checkLogin = function () {
             AccountService.checkAuthToken($scope.authToken)
                 .success(function (response) {
-                    if(response.token && response.token !== null) {
+                    if (response.token && response.token !== null) {
                         $scope.doLogin(response)
                     } else if (response.waiting) {
-                        if(spamCounter > 20*30) {
+                        if (spamCounter > 20 * 30) {
                             console.log('Gave up on the sso auth...');
                             $interval.cancel(authTimer);
                         } else {
