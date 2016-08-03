@@ -12,9 +12,11 @@ var bowerComponentsPath = path.join(__dirname, 'app', 'bower_components');
 
 var outputFilename = 'armada.js';
 var outputPath = appPath;
+var isProduction = false;
 if (process.env.NODE_ENV == 'production') {
     outputFilename = 'armada.[hash].js';
     outputPath = buildPath;
+    isProduction = true;
 }
 
 module.exports = {
@@ -104,38 +106,37 @@ module.exports = {
             $: 'jquery',
             jQuery: 'jquery',
             "window.jQuery": "jquery"
-        }),
+        })
+    ].concat(isProduction ? [
         new webpack.optimize.UglifyJsPlugin({
             mangle: false,
             compress: true
         }),
-        //new webpack.optimize.OccurenceOrderPlugin(true),
-        new webpack.DefinePlugin({
-            ON_TEST: process.env.NODE_ENV === "test"
-        }),
         function() {
             this.plugin("done", function(stats) {
-                if (process.env.NODE_ENV === 'production') {
-                    var replaceInFile = function (input, output, toReplace, replacement) {
-                        var replacer = function (match) {
-                            console.log('Replacing in %s: %s => %s', input, match, replacement);
-                            return replacement
-                        };
-                        var str = fs.readFileSync(input, 'utf8');
-                        var out = str.replace(new RegExp(toReplace, 'g'), replacer);
-                        fs.writeFileSync(output, out);
+                var replaceInFile = function (input, output, toReplace, replacement) {
+                    var replacer = function (match) {
+                        console.log('Replacing in %s: %s => %s', input, match, replacement);
+                        return replacement
                     };
+                    var str = fs.readFileSync(input, 'utf8');
+                    var out = str.replace(new RegExp(toReplace, 'g'), replacer);
+                    fs.writeFileSync(output, out);
+                };
 
-                    var hash = stats.hash; // Build's hash, found in `stats` since build lifecycle is done.
+                var hash = stats.hash; // Build's hash, found in `stats` since build lifecycle is done.
 
-                    replaceInFile(
-                        path.join(appPath,  'index.html'),
-                        path.join(buildPath, 'index.html'),
-                        'armada.js',
-                        'armada.' + hash + '.js'
-                    );
-                }
+                replaceInFile(
+                    path.join(appPath,  'index.html'),
+                    path.join(buildPath, 'index.html'),
+                    'armada.js',
+                    'armada.' + hash + '.js'
+                );
             });
         }
-    ]
+    ] : [
+        new webpack.DefinePlugin({
+            ON_TEST: process.env.NODE_ENV === "test"
+        })
+    ])
 };
